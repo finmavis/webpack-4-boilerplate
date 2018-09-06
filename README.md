@@ -1,8 +1,10 @@
 # Webpack 4 Tutorial
 
 ## Getting Started default Configuration
-* Install webpack webpack-cli as devDependencies
-* Add script to your package.json file
+
+* Install **webpack webpack-cli** as devDependencies
+* Add script to your **package.json** file
+
     ```
     "scripts": {
         "dev": "webpack --mode development",
@@ -11,8 +13,10 @@
     ```
 
 ## Support ES6 and Beyond
-* Install babel-core babel-loader babel-preset-env as devDependencies
-* Create file .babelrc and inside .babelrc is
+
+* Install **babel-core babel-loader babel-preset-env** as devDependencies
+* Create file **.babelrc** and inside **.babelrc** is
+
     ```
     {
         "presets": [
@@ -21,7 +25,8 @@
     }
     ```
 
-* Let's use babel with webpack, create webpack.config.js file, and code inside file is
+* Let's use babel with webpack, create **webpack.config.js** file, and code inside file is
+
     ```
     const path = require("path");
 
@@ -49,11 +54,12 @@
 
 ## Support CSS
 
-Install style-loader css-loader mini-css-extract-plugin as devDependencies
-* Open webpack.config.js and add to module.rules :
+Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
+* Open **webpack.config.js** and add to module.rules :
     
     ```
     const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
     {
         test: /\.css$/,
         use: [
@@ -63,7 +69,9 @@ Install style-loader css-loader mini-css-extract-plugin as devDependencies
         ]
     }
     ```
+
     And at Plugin add
+
     ```
     plugins: [
         new MiniCssExtractPlugin({
@@ -73,7 +81,8 @@ Install style-loader css-loader mini-css-extract-plugin as devDependencies
     ```
 
 ## Support SASS/SCSS
-* Install node-sass sass-loader as devDependencies
+
+* Install **node-sass sass-loader** as devDependencies
 * Change a little bit css module like this
 
     ```
@@ -84,8 +93,10 @@ Install style-loader css-loader mini-css-extract-plugin as devDependencies
     ```
 
 ## Add PostCSS
-* install postcss-loader autoprefixer as devDependencies
-* create postcss.config.js for PostCSS Config
+
+* install **postcss-loader autoprefixer** as devDependencies
+* create **postcss.config.js** for PostCSS Config
+
     ```
     module.exports = {
         plugins: [
@@ -100,14 +111,15 @@ Install style-loader css-loader mini-css-extract-plugin as devDependencies
     ```
 
 * Add postcss to your scss loader
+
     ```
     use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
     ```
 
 ## Auto Inject your bundle code to HTML
 
-* Install html-webpack-plugin as devDependencies
-* Open webpack.config.js and add :
+* Install **html-webpack-plugin** as devDependencies
+* Open **webpack.config.js** and add :
 
     ```
     const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -123,7 +135,8 @@ Install style-loader css-loader mini-css-extract-plugin as devDependencies
     ```
 
 ## Caching and Hashing
-* install webpack-md5-hash as devDependencies
+
+* install **webpack-md5-hash** as devDependencies
 * Edit output point of your js :
     
     ```
@@ -139,31 +152,37 @@ Install style-loader css-loader mini-css-extract-plugin as devDependencies
     ```
 
     Add new plugin 
+
     ```
     const WebpackMd5Hash = require('webpack-md5-hash');
+    
     plugins: [
         new WebpackMd5Hash()
     ]
     ```
 
 ## Keep Clean and Fresh
-* install clean-webpack-plugin as devDependencies
+
+* install **clean-webpack-plugin** as devDependencies
 
     ```
     const CleanWebpackPlugin = require('clean-webpack-plugin');
+
     plugins: [
         new CleanWebpackPlugin('dist', {})
     ]
     ```
 
 ## Add Development Server
-* Install webpack-dev-server as devDependencies
-* Add script to package.json
+
+* Install **webpack-dev-server** as devDependencies
+* Add script to **package.json**
+
     ```
     "start": "webpack-dev-server --open --mode development"
     ```
 
-* Add configuration to webpack.config.js
+* Add configuration to **webpack.config.js**
 
     ```
     devServer: {
