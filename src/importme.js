@@ -1,0 +1,1 @@
+export const hello = () => console.log("Import me Please!");
