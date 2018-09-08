@@ -94,7 +94,7 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
 
 ## Add PostCSS
 
-* install **postcss-loader autoprefixer** as devDependencies
+* install **postcss-loader autoprefixer cssnano** as devDependencies
 * create **postcss.config.js** for PostCSS Config
 
     ```
@@ -105,7 +105,8 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
                     '> 1%',
                     'last 10 versions',
                 ]
-            })
+            }),
+            require('cssnano')()
         ]
     }
     ```

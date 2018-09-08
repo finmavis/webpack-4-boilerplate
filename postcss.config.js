@@ -5,6 +5,7 @@ module.exports = {
                 '> 1%',
                 'last 10 versions',
             ]
-        })
+        }),
+        require('cssnano')()
     ]
 }
