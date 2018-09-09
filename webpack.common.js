@@ -12,12 +12,6 @@ module.exports = {
         path: path.resolve(__dirname, 'build'),
         filename: '[name].[chunkhash].js'
     },
-    devServer: {
-        contentBase: path.join(__dirname, 'build'),
-        compress: true,
-        port: 3000
-    },
-    devtool: 'source-map',
     module: {
         rules: [
             {

@@ -192,3 +192,101 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
         port: 3000
     },
     ```
+
+## Separate Development and Production
+
+* install **webpack-merge** as devDependencies
+* Make 3 webpack configuration
+    * **webpack.common.js** for common configuration
+    * **webpack.dev.js** for Development Mode
+    * **webpack.prod.js** for Production and optimized
+
+* Separate your code
+    * **webpack.common.js**
+    ```
+    const path = require('path');
+    const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+    const HtmlWebpackPlugin = require('html-webpack-plugin');
+    const WebpackMd5Hash = require('webpack-md5-hash');
+    const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+    module.exports = {
+        entry: {
+            main: './src/index.js'
+        },
+        output: {
+            path: path.resolve(__dirname, 'build'),
+            filename: '[name].[chunkhash].js'
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: 'babel-loader'
+                    }
+                },
+                {
+                    test: /\.scss$/,
+                    exclude: /node_modules/,
+                    use: [
+                        'style-loader', 
+                        MiniCssExtractPlugin.loader, 
+                        'css-loader', 
+                        'postcss-loader',
+                        'sass-loader'
+                    ]
+                }
+            ]
+        },
+        plugins: [
+            new CleanWebpackPlugin('build', {} ),
+            new MiniCssExtractPlugin({
+                filename: 'style.[contenthash].css'
+            }),
+            new HtmlWebpackPlugin({
+                template: './src/index.html',
+                filename: 'index.html'
+            }),
+            new WebpackMd5Hash()
+        ]
+    };
+    ```
+
+    * **webpack.dev.js**
+    ```
+    const merge = require('webpack-merge');
+    const common = require('./webpack.common');
+    const path = require('path');
+
+    module.exports = merge(common, {
+        mode: 'development',
+        devServer: {
+            contentBase: path.join(__dirname, 'build'),
+            compress: true,
+            port: 3000
+        },
+        devtool: 'inline-source-map'
+    });
+    ```
+
+    * **webpack.prod.js**
+    ```
+    const merge = require('webpack-merge');
+    const common = require('./webpack.common');
+
+    module.exports = merge(common, {
+        mode: 'production',
+        devtool: 'source-map'
+    });
+    ```
+
+* Edit script to your package.json to look like this, and remove others scripts
+
+    ```
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+    ```
+
+* Now delete your **webpack.config.js** because we already use separate configuration
