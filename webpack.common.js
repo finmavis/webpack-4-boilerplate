@@ -31,6 +31,25 @@ module.exports = {
                     'postcss-loader',
                     'sass-loader'
                 ]
+            },
+            {     
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'assets/images/'
+                    }
+                }]
+            },
+            {
+                test: /\.html$/,
+                use: {
+                    loader: 'html-loader',
+                    options: {
+                        attrs: ['img:src', 'link:href', ':data-src']
+                    }
+                }
             }
         ]
     },
