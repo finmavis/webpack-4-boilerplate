@@ -1,7 +1,7 @@
 {
-  "name": "learn-webpack",
+  "name": "webpack-4-boilerplate",
   "version": "1.0.0",
-  "description": "Learning how to configure webpack",
+  "description": "Boilerplate for development using webpack 4",
   "private": true,
   "author": "Fin Mavis",
   "license": "MIT",
