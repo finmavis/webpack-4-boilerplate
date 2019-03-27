@@ -51,6 +51,7 @@ module.exports = {
           loader: 'html-loader',
           options: {
             attrs: ['img:src', 'link:href', ':data-src'],
+            minimize: true,
           },
         },
       },
