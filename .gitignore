@@ -1,3 +1,5 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # Logs
 logs
 *.log
@@ -8,6 +10,22 @@ yarn-error.log*
 # Dependency directories
 node_modules/
 jspm_packages/
+/.pnp
+.pnp.js
+
+# dotenv environment variables file
+.env
+.env.test
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# testing
+/coverage
+
+# production
+/build
 
 # Optional npm cache directory
 .npm
@@ -17,10 +35,3 @@ jspm_packages/
 
 # Yarn Integrity file
 .yarn-integrity
-
-# dotenv environment variables file
-.env
-.env.test
-
-# production
-/build
