@@ -30,10 +30,11 @@
     "webpack-merge": "^4.1.4"
   },
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "start": "webpack-dev-server --open --config=config/webpack.dev.js",
+    "build": "webpack --config=config/webpack.prod.js"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0"
+    "@babel/polyfill": "^7.0.0",
+    "compression-webpack-plugin": "^2.0.0"
   }
 }

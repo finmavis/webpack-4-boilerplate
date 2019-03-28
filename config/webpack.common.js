@@ -4,13 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const PrettierPlugin = require('prettier-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: {
     main: './src/index.js',
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, '../dist'),
     filename: '[name].[chunkhash].js',
   },
   module: {
@@ -23,7 +24,17 @@ module.exports = {
         },
       },
       {
-        test: /\.scss$/,
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+        ],
+      },
+      {
+        test: /\.(sass|scss)$/,
         exclude: /node_modules/,
         use: [
           'style-loader',
@@ -68,5 +79,8 @@ module.exports = {
       filename: 'index.html',
     }),
     new WebpackMd5Hash(),
+    new CompressionPlugin({
+      algorithm: 'gzip',
+    })
   ],
 };
