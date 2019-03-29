@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const PrettierPlugin = require('prettier-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
@@ -69,7 +68,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new PrettierPlugin(),
     new CleanWebpackPlugin('build', {}),
     new MiniCssExtractPlugin({
       filename: 'style.[contenthash].css',
