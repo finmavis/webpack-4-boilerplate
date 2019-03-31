@@ -77,7 +77,9 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin('dist', {}),
+    new CleanWebpackPlugin(['dist', 'build'], {
+      root: path.resolve(__dirname, "../"),
+    }),
     new MiniCssExtractPlugin({
       filename: 'style.min.css',
     }),
