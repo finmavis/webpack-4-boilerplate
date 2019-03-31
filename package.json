@@ -11,6 +11,7 @@
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^0.1.19",
+    "compression-webpack-plugin": "^2.0.0",
     "css-loader": "^1.0.0",
     "cssnano": "^4.1.0",
     "file-loader": "^3.0.1",
@@ -18,21 +19,21 @@
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.2",
     "node-sass": "^4.9.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
+    "terser-webpack-plugin": "^1.2.3",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.7",
-    "webpack-md5-hash": "^0.0.6",
-    "webpack-merge": "^4.1.4"
+    "webpack-md5-hash": "^0.0.6"
   },
   "scripts": {
     "start": "webpack-dev-server --open --config=config/webpack.dev.js",
     "build": "webpack --config=config/webpack.prod.js"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
-    "compression-webpack-plugin": "^2.0.0"
+    "@babel/polyfill": "^7.0.0"
   }
 }
