@@ -77,9 +77,12 @@ module.exports = {
     ],
   },
   plugins: [
+    // CleanWebpackPlugin will do some clean up/remove folder before build
+    // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
     new CleanWebpackPlugin(['dist', 'build'], {
       root: path.resolve(__dirname, "../"),
     }),
+    // This plugin will extract all css to one file
     new MiniCssExtractPlugin({
       filename: 'style.min.css',
     }),
@@ -88,6 +91,9 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html',
     }),
+    // ComppresionPlugin will Prepare compressed versions of assets to serve them with Content-Encoding.
+    // In this case we use gzip
+    // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
     new CompressionPlugin({
       algorithm: 'gzip',
     })
