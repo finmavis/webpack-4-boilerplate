@@ -9,12 +9,12 @@ module.exports = {
     main: './src/index.js',
   },
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, '../build'),
     filename: '[name].[chunkhash].js',
   },
   mode: 'development',
   devServer: {
-    contentBase: path.join(__dirname, '../dist'),
+    contentBase: path.join(__dirname, '../build'),
     compress: true,
     port: 3000,
     overlay: true,
