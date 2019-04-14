@@ -71,22 +71,22 @@ These are the packages we will be using :
 
   module.exports = {
     entry: {
-        main: './src/index.js'
+      main: './src/index.js'
     },
     output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'script.js'
+      path: path.resolve(__dirname, 'build'),
+      filename: 'script.js'
     },
     module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            }
-        ]
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
+          }
+        }
+      ]
     }
   };
   ```
@@ -103,9 +103,9 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
   {
     test: /\.css$/,
     use: [
-        'style-loader',
-        MiniCssExtractPlugin.loader,
-        'css-loader'
+      'style-loader',
+      MiniCssExtractPlugin.loader,
+      'css-loader'
     ]
   }
   ```
@@ -115,7 +115,7 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
   ```
   plugins: [
     new MiniCssExtractPlugin({
-        filename: 'style.css',
+      filename: 'style.css',
     }),
   ]
   ```
@@ -129,10 +129,10 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
   {
     test: /\.(sa|sc)ss$/,
     use: [
-        'style-loader',
-        MiniCssExtractPlugin.loader,
-        'css-loader',
-        'sass-loader'
+      'style-loader',
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'sass-loader'
     ]
   }
   ```
@@ -145,8 +145,8 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
   ```
   module.exports = {
     plugins: [
-        require('autoprefixer'),
-        require('cssnano')()
+      require('autoprefixer'),
+      require('cssnano')()
     ]
   }
   ```
@@ -155,25 +155,25 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
 
   ```
   {
-      test: /\.css$/,
-      exclude: /node_modules/,
-      use: [
-          'style-loader',
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-      ],
+    test: /\.css$/,
+    exclude: /node_modules/,
+    use: [
+      'style-loader',
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'postcss-loader',
+    ],
   },
   {
-      test: /\.(sa|sc)ss$/,
-      exclude: /node_modules/,
-      use: [
-          'style-loader',
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-      ],
+    test: /\.(sa|sc)ss$/,
+    exclude: /node_modules/,
+    use: [
+      'style-loader',
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'postcss-loader',
+      'sass-loader',
+    ],
   },
   ```
 
@@ -188,10 +188,10 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
   module.export = {
     // ... others configuration,
     plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/index.html',
-            filename: 'index.html'
-        })
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        filename: 'index.html'
+      })
     ]
   }
   ```
