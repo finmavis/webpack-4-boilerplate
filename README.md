@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-If you only want to use this but dont want to know how to implement it, well just clone this repo and start develop.
+If you only want to use this webpack 4 configuration and dont want to know how to implement it, well just clone this repo and start develop.
 
 1. `git clone https://github.com/finmavis/webpack-4-boilerplate.git`
 2. Navigate to folder you just clone
