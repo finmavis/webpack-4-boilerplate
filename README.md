@@ -19,19 +19,19 @@
 
 These are the packages we will be using :
 
-- @babel/core
+- **@babel/core**
   This package, as the name would suggest, is the core package. The package is responsible for compiling javascript code and outputting usable code. By default it uses your local configuration, but we will get into that later on.
 
-- @babel/preset-env
+- **@babel/preset-env**
   Knowing what browser supports what javascript feature is essential in transforming your code. Here is where preset-env comes in. It handles what transforms should be applied, based on your own input. You tell Babel: “I need support for these browsers” and it will transform your javascript so it will work on the list you provide.
 
-- @babel/polyfill
+- **@babel/polyfill**
   Sometimes the browsers you want to support need a little extra help for certain features. @babel/polyfill will provide polyfills for those featured, based on what browsers you wish to support.
 
-- babel-loader
+- **babel-loader**
   Since we will be using Webpack, this package allows us to transpile our code using Babel and Webpack.
 
-- Create file **.babelrc** and inside **.babelrc** is
+- Create file **.babelrc** and fill it with :
 
   ```
   {
@@ -44,12 +44,14 @@ These are the packages we will be using :
   }
   ```
 
-- create file **.browserslistrc** and inside **.browserslistrc** add
+- create file **.browserslistrc** and add the list browser you want to support. <br>
+  Note: you can check browserlist [Here](https://browserl.ist/) <br>
+  In this case we will you this configuration :
 
   ```
   > 1%
   not ie <= 9
-  last 2 versions
+  last 3 versions
   ```
 
 - Let's use babel with webpack, create **webpack.config.js** file, and code inside file is
@@ -115,8 +117,13 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
 
   ```
   {
-    test: /\.scss$/,
-    use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+    test: /\.(sa|sc)ss$/,
+    use: [
+        'style-loader',
+        MiniCssExtractPlugin.loader,
+        'css-loader',
+        'sass-loader'
+    ]
   }
   ```
 
@@ -134,10 +141,30 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
   }
   ```
 
-- Add postcss to your scss loader
+- Add postcss to your css, sass and scss loader
 
   ```
-  use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+  {
+      test: /\.css$/,
+      exclude: /node_modules/,
+      use: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+      ],
+  },
+  {
+      test: /\.(sa|sc)ss$/,
+      exclude: /node_modules/,
+      use: [
+          'style-loader',
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+      ],
+  },
   ```
 
 ## Auto Inject your bundle code to HTML
@@ -149,6 +176,7 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
   const HtmlWebpackPlugin = require('html-webpack-plugin');
 
   module.export = {
+    // ... others configuration,
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
@@ -164,7 +192,10 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
 - Edit output point of your js :
 
   ```
-  filename: '[name].[chunkhash].js'
+  output: {
+    path: path.resolve(__dirname, 'build'),
+    filename: '[name].[chunkhash].js',
+  },
   ```
 
   And in plugin css
@@ -193,7 +224,7 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
   const CleanWebpackPlugin = require('clean-webpack-plugin');
 
   plugins: [
-    new CleanWebpackPlugin('dist', {})
+    new CleanWebpackPlugin(['dist', 'build'], {})
   ]
   ```
 
@@ -218,103 +249,227 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
 
 ## Separate Development and Production
 
-- install **webpack-merge** as devDependencies
-- Make 3 webpack configuration
+- First we need to create **config** folder to put ours configuration
+- Create 2 webpack configuration
 
-  - **webpack.common.js** for common configuration
-  - **webpack.dev.js** for Development Mode
-  - **webpack.prod.js** for Production and optimized
+  - **config/webpack.dev.js** for Development Mode
+  - **config/webpack.prod.js** for Production and optimized
 
 - Separate your code
-
-  - **webpack.common.js**
-
-  ```
-  const path = require('path');
-  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-  const HtmlWebpackPlugin = require('html-webpack-plugin');
-  const WebpackMd5Hash = require('webpack-md5-hash');
-  const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-  module.exports = {
-    entry: {
-        main: './src/index.js'
-    },
-    output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: '[name].[chunkhash].js'
-    },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.scss$/,
-                exclude: /node_modules/,
-                use: [
-                    'style-loader',
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader'
-                ]
-            }
-        ]
-    },
-    plugins: [
-        new CleanWebpackPlugin('build', {} ),
-        new MiniCssExtractPlugin({
-            filename: 'style.[contenthash].css'
-        }),
-        new HtmlWebpackPlugin({
-            template: './src/index.html',
-            filename: 'index.html'
-        }),
-        new WebpackMd5Hash()
-    ]
-  };
-  ```
 
   - **webpack.dev.js**
 
   ```
-  const merge = require('webpack-merge');
-  const common = require('./webpack.common');
   const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const WebpackMd5Hash = require('webpack-md5-hash');
+  const CleanWebpackPlugin = require('clean-webpack-plugin');
+  const CompressionPlugin = require('compression-webpack-plugin');
 
-  module.exports = merge(common, {
-      mode: 'development',
-      devServer: {
-          contentBase: path.join(__dirname, 'build'),
-          compress: true,
-          port: 3000
-      },
-      devtool: 'inline-source-map'
-  });
+  module.exports = {
+    entry: {
+      main: './src/index.js',
+    },
+    output: {
+      path: path.resolve(__dirname, '../build'),
+      filename: '[name].[chunkhash].js',
+    },
+    mode: 'development',
+    devServer: {
+      contentBase: path.join(__dirname, '../build'),
+      compress: true,
+      port: 3000,
+      overlay: true,
+    },
+    devtool: 'inline-source-map',
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+          },
+        },
+        {
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: [
+            'style-loader',
+            'css-loader',
+            'postcss-loader',
+          ],
+        },
+        {
+          test: /\.(sa|sc)ss$/,
+          exclude: /node_modules/,
+          use: [
+            'style-loader',
+            'css-loader',
+            'postcss-loader',
+            'sass-loader',
+          ],
+        },
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'assets/images/',
+              },
+            },
+          ],
+        },
+        {
+          test: /\.html$/,
+          use: {
+            loader: 'html-loader',
+            options: {
+              attrs: ['img:src', 'link:href', ':data-src'],
+              minimize: true,
+            },
+          },
+        },
+      ],
+    },
+    plugins: [
+      // CleanWebpackPlugin will do some clean up/remove folder before build
+      // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
+      new CleanWebpackPlugin(['dist', 'build'], {
+        root: path.resolve(__dirname, '../'),
+      }),
+      // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        filename: 'index.html',
+      }),
+      new WebpackMd5Hash(),
+      // ComppresionPlugin will Prepare compressed versions of assets to serve them with Content-Encoding.
+      // In this case we use gzip
+      // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
+      new CompressionPlugin({
+        algorithm: 'gzip',
+      }),
+    ],
+  };
+
   ```
 
   - **webpack.prod.js**
 
   ```
-  const merge = require('webpack-merge');
-  const common = require('./webpack.common');
+  const path = require('path');
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const CleanWebpackPlugin = require('clean-webpack-plugin');
+  const CompressionPlugin = require('compression-webpack-plugin');
+  const TerserJSPlugin = require('terser-webpack-plugin');
+  const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-  module.exports = merge(common, {
-      mode: 'production',
-      devtool: 'source-map'
-  });
+  module.exports = {
+    entry: {
+      main: './src/index.js',
+    },
+    output: {
+      path: path.resolve(__dirname, '../build'),
+      filename: 'main.bundle.js',
+    },
+    mode: 'production',
+    devtool: 'source-map',
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+          },
+        },
+        {
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: [
+            'style-loader',
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'postcss-loader',
+          ],
+        },
+        {
+          test: /\.(sa|sc)ss$/,
+          exclude: /node_modules/,
+          use: [
+            'style-loader',
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'postcss-loader',
+            'sass-loader',
+          ],
+        },
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'assets/images/',
+              },
+            },
+          ],
+        },
+        {
+          test: /\.html$/,
+          use: {
+            loader: 'html-loader',
+            options: {
+              attrs: ['img:src', 'link:href', ':data-src'],
+              minimize: true,
+            },
+          },
+        },
+      ],
+    },
+    optimization: {
+      minimizer: [
+        new TerserJSPlugin({}),
+        new OptimizeCSSAssetsPlugin({}),
+      ],
+    },
+    plugins: [
+      // CleanWebpackPlugin will do some clean up/remove folder before build
+      // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
+      new CleanWebpackPlugin(['dist', 'build'], {
+        root: path.resolve(__dirname, "../"),
+      }),
+      // This plugin will extract all css to one file
+      new MiniCssExtractPlugin({
+        filename: 'style.min.css',
+      }),
+      // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        filename: 'index.html',
+      }),
+      // ComppresionPlugin will Prepare compressed versions of assets to serve them with Content-Encoding.
+      // In this case we use gzip
+      // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
+      new CompressionPlugin({
+        algorithm: 'gzip',
+      })
+    ],
+  };
   ```
 
 - Edit script to your package.json to look like this, and remove others scripts
 
   ```
-  "start": "webpack-dev-server --open --config webpack.dev.js",
-  "build": "webpack --config webpack.prod.js"
+  "scripts": {
+    "start": "webpack-dev-server --open --config=config/webpack.dev.js",
+    "build": "webpack --config=config/webpack.prod.js"
+  },
   ```
 
 - Now delete your **webpack.config.js** because we already use separate configuration
