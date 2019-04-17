@@ -35,5 +35,10 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "not ie <= 9",
+    "last 3 versions"
+  ]
 }
