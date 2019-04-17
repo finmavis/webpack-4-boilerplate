@@ -157,13 +157,13 @@ Install **node-sass sass-loader** as devDependencies
 
 ## Add PostCSS
 
-install **postcss-loader autoprefixer cssnano** as devDependencies
+install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 - **postcss-loader**
   Loader for webpack to process CSS with PostCSS
 
-- **autoprefixer**
-  PostCSS plugin to parse CSS and add vendor prefixes to CSS rules using values from [Can I Use](https://caniuse.com).
+- **postcss-preset-env**
+  PostCSS Preset Env lets you convert modern CSS into something most browsers can understand, determining the polyfills you need based on your targeted browsers or runtime environments, using [cssdb](https://cssdb.org/). Also you can check [Can I Use](https://caniuse.com) for browserlist.
 
 - **css-nano**
   cssnano takes your nicely formatted CSS and runs it through many focused optimisations, to ensure that the final result is as small as possible for a production environment.
@@ -173,8 +173,8 @@ install **postcss-loader autoprefixer cssnano** as devDependencies
   ```
   module.exports = {
     plugins: [
-      require('autoprefixer'),
-      require('cssnano')()
+      require('postcss-preset-env')(),
+      require('cssnano')(),
     ]
   }
   ```
@@ -433,7 +433,6 @@ Install **html-webpack-plugin** as devDependencies
           test: /\.css$/,
           exclude: /node_modules/,
           use: [
-            'style-loader',
             MiniCssExtractPlugin.loader,
             'css-loader',
             'postcss-loader',
@@ -443,7 +442,6 @@ Install **html-webpack-plugin** as devDependencies
           test: /\.(sa|sc)ss$/,
           exclude: /node_modules/,
           use: [
-            'style-loader',
             MiniCssExtractPlugin.loader,
             'css-loader',
             'postcss-loader',
