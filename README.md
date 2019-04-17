@@ -54,14 +54,16 @@ These are the packages we will be using :
   }
   ```
 
-- create file **.browserslistrc** and add the list browser you want to support. <br>
+- Then add your target browser you want to support in `package.json`. <br>
   Note: you can check browserlist [Here](https://browserl.ist/) <br>
   In this case we will use this configuration :
 
   ```
-  > 1%
-  not ie <= 9
-  last 3 versions
+  "browserslist": [
+    "> 1%",
+    "not ie <= 9",
+    "last 3 versions"
+  ]
   ```
 
 - Let's use babel with webpack, create **webpack.config.js** file, and code inside file is
@@ -161,7 +163,7 @@ install **postcss-loader autoprefixer cssnano** as devDependencies
   Loader for webpack to process CSS with PostCSS
 
 - **autoprefixer**
-  PostCSS plugin to parse CSS and add vendor prefixes to CSS rules using values from [Can I Use](https://caniuse.com). 
+  PostCSS plugin to parse CSS and add vendor prefixes to CSS rules using values from [Can I Use](https://caniuse.com).
 
 - **css-nano**
   cssnano takes your nicely formatted CSS and runs it through many focused optimisations, to ensure that the final result is as small as possible for a production environment.
