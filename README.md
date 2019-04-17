@@ -56,7 +56,7 @@ These are the packages we will be using :
 
 - create file **.browserslistrc** and add the list browser you want to support. <br>
   Note: you can check browserlist [Here](https://browserl.ist/) <br>
-  In this case we will you this configuration :
+  In this case we will use this configuration :
 
   ```
   > 1%
@@ -75,7 +75,7 @@ These are the packages we will be using :
     },
     output: {
       path: path.resolve(__dirname, 'build'),
-      filename: 'script.js'
+      filename: 'main.bundle.js'
     },
     module: {
       rules: [
@@ -94,6 +94,15 @@ These are the packages we will be using :
 ## Support CSS
 
 Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
+
+- **style-loader**
+  This package will Adds CSS to the DOM by injecting a `<style>` tag
+
+- **css-loader**
+  This package will interprets @import and url() like import/require() and will resolve them.
+
+- **mini-css-extract-plugin**
+  This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
 
 - Open **webpack.config.js** and add to module.rules :
 
@@ -122,7 +131,14 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
 
 ## Support SASS/SCSS
 
-- Install **node-sass sass-loader** as devDependencies
+Install **node-sass sass-loader** as devDependencies
+
+- **node-sass**
+  Node-sass is a library that provides binding for Node.js to LibSass, the C version of the popular stylesheet preprocessor, Sass. It allows you to natively compile .scss/.sass files to css at incredible speed and automatically via a connect middleware. And in this case this package is `peerDependencies` of our sass-loader
+
+- **sass-loader**
+  Loads a Sass/SCSS file and compiles it to CSS for webpack.
+
 - Change a little bit css module like this
 
   ```
@@ -139,7 +155,17 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
 
 ## Add PostCSS
 
-- install **postcss-loader autoprefixer cssnano** as devDependencies
+install **postcss-loader autoprefixer cssnano** as devDependencies
+
+- **postcss-loader**
+  Loader for webpack to process CSS with PostCSS
+
+- **autoprefixer**
+  PostCSS plugin to parse CSS and add vendor prefixes to CSS rules using values from [Can I Use](https://caniuse.com). 
+
+- **css-nano**
+  cssnano takes your nicely formatted CSS and runs it through many focused optimisations, to ensure that the final result is as small as possible for a production environment.
+
 - create **postcss.config.js** for PostCSS Config
 
   ```
@@ -151,7 +177,7 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
   }
   ```
 
-- Add postcss to your css, sass and scss loader
+- Add postcss to your `css`, `sass` and `scss` loader
 
   ```
   {
@@ -179,7 +205,11 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
 
 ## Auto Inject your bundle code to HTML
 
-- Install **html-webpack-plugin** as devDependencies
+Install **html-webpack-plugin** as devDependencies
+
+- **html-webpack-plugin**
+  This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
+
 - Open **webpack.config.js** and add :
 
   ```

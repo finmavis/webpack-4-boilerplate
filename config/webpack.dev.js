@@ -26,33 +26,33 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: 'babel-loader', // transpiling our JavaScript files using Babel and webpack
         },
       },
       {
         test: /\.css$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
+          'style-loader', // creates style nodes from JS strings
+          'css-loader', // translates CSS into CommonJS
+          'postcss-loader', // Loader for webpack to process CSS with PostCSS
         ],
       },
       {
         test: /\.(sa|sc)ss$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
+          'style-loader', // creates style nodes from JS strings
+          'css-loader', // translates CSS into CommonJS
+          'postcss-loader', // Loader for webpack to process CSS with PostCSS
+          'sass-loader', // compiles Sass to CSS, using Node Sass by default
         ],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: 'file-loader', // This will resolves import/require() on a file into a url and emits the file into the output directory.
             options: {
               name: '[name].[ext]',
               outputPath: 'assets/images/',
