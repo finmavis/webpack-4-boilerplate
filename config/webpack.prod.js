@@ -5,6 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -94,6 +95,12 @@ module.exports = {
     // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
     new CompressionPlugin({
       algorithm: 'gzip',
-    })
+    }),
+    new BrotliPlugin({
+			asset: '[path].br[query]',
+      test: /\.(js|css|html|svg)$/,
+			threshold: 10240,
+			minRatio: 0.8
+		})
   ],
 };
