@@ -93,14 +93,7 @@ module.exports = {
     // ComppresionPlugin will Prepare compressed versions of assets to serve them with Content-Encoding.
     // In this case we use gzip
     // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
-    new CompressionPlugin({
-      algorithm: 'gzip',
-    }),
-    new BrotliPlugin({
-			asset: '[path].br[query]',
-      test: /\.(js|css|html|svg)$/,
-			threshold: 10240,
-			minRatio: 0.8
-		})
+    new CompressionPlugin({}),
+    new BrotliPlugin({})
   ],
 };
