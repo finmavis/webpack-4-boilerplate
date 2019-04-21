@@ -25,7 +25,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 ## Support ES6 and Beyond
 
 - Install **@babel/core @babel/preset-env babel-loader** as devDependencies
-- Install **@babel/polyfill** as dependencies
+- Install **@babel/polyfill** and **core-js@3** as dependencies
 
 These are the packages we will be using :
 
@@ -41,20 +41,24 @@ These are the packages we will be using :
 - **babel-loader**
   Since we will be using Webpack, this package allows us to transpile our code using Babel and Webpack.
 
-- Create file **.babelrc** and fill it with :
+- **core-js@3**
+  It is a polyfill of the JavaScript standard library, which supports: The latest ECMAScript standard.
+
+* Create file **.babelrc** and fill it with :
 
   ```
   {
     "presets": [
   	  ["@babel/preset-env", {
         "useBuiltIns": "usage",
-  	    "debug":true
+  	    "debug": true,
+        "corejs": 3
   	  }]
   	]
   }
   ```
 
-- Then add your target browser you want to support in `package.json`. <br>
+* Then add your target browser you want to support in `package.json`. <br>
   Note: you can check browserlist [Here](https://browserl.ist/) <br>
   In this case we will use this configuration :
 
@@ -66,7 +70,7 @@ These are the packages we will be using :
   ]
   ```
 
-- Let's use babel with webpack, create **webpack.config.js** file, and code inside file is
+* Let's use babel with webpack, create **webpack.config.js** file, and code inside file is
 
   ```
   const path = require("path");
