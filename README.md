@@ -10,16 +10,41 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 4. Then for development just run the script `yarn start` or `npm run start`
 5. To build for production just run the script `yarn build` or `npm run build`, it will generate folder **build**.
 
-## Getting Started default Configuration
+## Getting Started
+- initial your project
+- **npm init** or **yarn init**
+- Create **config** and **src** folder
+- Create **webpack.config.js** inside **config** folder
+- Create **index.html** and **index.js** inside **src** folder
+- Install **webpack webpack-cli webpack-dev-server** as development dependencies
 
-- Install **webpack webpack-cli** as devDependencies
-- Add script to your **package.json** file
-
+  - **index.html**
   ```
-  "scripts": {
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production"
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Webpack 4 Boilerplate</title>
+  </head>
+  <body>
+    <h1>Webpack 4 boilerplate</h1>
+  </body>
+  </html>
+  ```
+
+  - **index.js**
+  ```
+  const tes = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve("Hello World"), 2000);
+    });
   }
+
+  tes()
+    .then(value => console.log(value));
   ```
 
 ## Support ES6 and Beyond
@@ -70,7 +95,7 @@ These are the packages we will be using :
   ]
   ```
 
-* Let's use babel with webpack, create **webpack.config.js** file, and code inside file is
+* Let's use babel with webpack, create **webpack.config.js** file inside **config** folder, and code inside file is
 
   ```
   const path = require("path");
@@ -80,9 +105,17 @@ These are the packages we will be using :
       main: './src/index.js'
     },
     output: {
-      path: path.resolve(__dirname, 'build'),
+      path: path.resolve(__dirname, '../build'),
       filename: 'main.bundle.js'
     },
+    mode: 'development',
+    devServer: {
+      contentBase: path.join(__dirname, '../build'),
+      compress: true,
+      port: 3000,
+      overlay: true,
+    },
+    devtool: 'inline-source-map',
     module: {
       rules: [
         {
@@ -93,9 +126,41 @@ These are the packages we will be using :
           }
         }
       ]
-    }
+    },
   };
   ```
+
+## Auto Inject your bundle code to HTML
+
+Install **html-webpack-plugin** as devDependencies
+
+- **html-webpack-plugin**
+  This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
+
+- Open **webpack.config.js** and add :
+
+  ```
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+  module.export = {
+    // ... others configuration,
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        filename: 'index.html'
+      })
+    ]
+  }
+  ```
+
+- Open **package.json** and add script for webpack to compile
+  ```
+  "scripts": {
+    "start": "webpack-dev-server --open --config=config/webpack.config.js"
+  },
+  ```
+
+- Now you can start your `development` by running `npm start` or `yarn start`
 
 ## Support CSS
 
@@ -209,29 +274,6 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
   },
   ```
 
-## Auto Inject your bundle code to HTML
-
-Install **html-webpack-plugin** as devDependencies
-
-- **html-webpack-plugin**
-  This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
-
-- Open **webpack.config.js** and add :
-
-  ```
-  const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-  module.export = {
-    // ... others configuration,
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: './src/index.html',
-        filename: 'index.html'
-      })
-    ]
-  }
-  ```
-
 ## Caching and Hashing
 
 - install **webpack-md5-hash** as devDependencies
@@ -239,7 +281,7 @@ Install **html-webpack-plugin** as devDependencies
 
   ```
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, '../build'),
     filename: '[name].[chunkhash].js',
   },
   ```
@@ -270,32 +312,23 @@ Install **html-webpack-plugin** as devDependencies
   const CleanWebpackPlugin = require('clean-webpack-plugin');
 
   plugins: [
-    new CleanWebpackPlugin(['dist', 'build'], {})
+    new CleanWebpackPlugin(['dist', 'build'], {
+      root: path.resolve(__dirname, '../'),
+    })
   ]
   ```
 
-## Add Development Server
+## Support images file
+  - will be added soon
 
-- Install **webpack-dev-server** as devDependencies
-- Add script to **package.json**
+## Support HTML Reference
+  - will be added soon
 
-  ```
-  "start": "webpack-dev-server --open --mode development"
-  ```
-
-- Add configuration to **webpack.config.js**
-
-  ```
-  devServer: {
-    contentBase: path.join(__dirname, 'build'),
-    compress: true,
-    port: 3000
-  },
-  ```
+## Optimization
+  - Will be added soon
 
 ## Separate Development and Production
 
-- First we need to create **config** folder to put ours configuration
 - Create 2 webpack configuration
 
   - **config/webpack.dev.js** for Development Mode
@@ -413,6 +446,7 @@ Install **html-webpack-plugin** as devDependencies
   const CompressionPlugin = require('compression-webpack-plugin');
   const TerserJSPlugin = require('terser-webpack-plugin');
   const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+  const BrotliPlugin = require('brotli-webpack-plugin');
 
   module.exports = {
     entry: {
@@ -420,7 +454,7 @@ Install **html-webpack-plugin** as devDependencies
     },
     output: {
       path: path.resolve(__dirname, '../build'),
-      filename: 'main.bundle.js',
+      filename: '[name].bundle.js',
     },
     mode: 'production',
     devtool: 'source-map',
@@ -502,7 +536,7 @@ Install **html-webpack-plugin** as devDependencies
       // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
       new CompressionPlugin({
         algorithm: 'gzip',
-      })
+      }),
     ],
   };
   ```

@@ -90,5 +90,6 @@ module.exports = {
     new CompressionPlugin({
       algorithm: 'gzip',
     }),
+    new BrotliPlugin({}),
   ],
 };

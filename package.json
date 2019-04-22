@@ -1,7 +1,7 @@
 {
   "name": "webpack-4-boilerplate",
   "version": "1.0.0",
-  "description": "Boilerplate for development using webpack 4",
+  "description": "Boilerplate for modern javascript development using webpack 4",
   "private": true,
   "author": "Fin Mavis",
   "license": "MIT",
