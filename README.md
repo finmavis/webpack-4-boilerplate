@@ -1,4 +1,4 @@
-# Webpack 4 Tutorial
+# Webpack 4 Boilerplate
 
 ## TL;DR
 
