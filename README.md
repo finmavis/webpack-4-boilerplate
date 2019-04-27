@@ -178,14 +178,20 @@ Install **style-loader css-loader** as devDependencies
 - Open **webpack.config.js** and add to module.rules :
 
   ```
-  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
-  {
-    test: /\.css$/,
-    use: [
-      'style-loader',
-      'css-loader'
-    ]
+  module.export = {
+    // ... others configuration
+    module: {
+      rules: [
+        // ... others module rules configuration
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            'css-loader'
+          ]
+        }
+      ]
+    },
   }
   ```
 
@@ -202,13 +208,28 @@ Install **node-sass sass-loader** as devDependencies
 - Change a little bit css module like this
 
   ```
-  {
-    test: /\.(sa|sc)ss$/,
-    use: [
-      'style-loader',
-      'css-loader',
-      'sass-loader'
-    ]
+  module.export = {
+    // ... others configuration
+    module: {
+      rules: [
+        // ... others module rules configuration
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            'css-loader'
+          ]
+        },
+        {
+          test: /\.(sa|sc)ss$/,
+          use: [
+            'style-loader',
+            'css-loader',
+            'sass-loader'
+          ]
+        }
+      ]
+    },
   }
   ```
 
@@ -272,13 +293,17 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
   ```
   const WebpackMd5Hash = require('webpack-md5-hash');
 
-  output: {
-    path: path.resolve(__dirname, '../build'),
-    filename: '[name].[chunkhash].js',
-  },
-  plugins: [
-    new WebpackMd5Hash()
-  ]
+  module.export = {
+    // ... others configuration
+    output: {
+      path: path.resolve(__dirname, '../build'),
+      filename: '[name].[chunkhash].js',
+    },
+    plugins: [
+      // ... others plugins configuration
+      new WebpackMd5Hash()
+    ]
+  }
   ```
 
 ## Keep Clean and Fresh
@@ -291,11 +316,15 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
   ```
   const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-  plugins: [
-    new CleanWebpackPlugin(['dist', 'build'], {
-      root: path.resolve(__dirname, '../'),
-    })
-  ]
+  module.export = {
+    // ... others configuration
+    plugins: [
+      // ... others plugins configuration
+      new CleanWebpackPlugin(['dist', 'build'], {
+        root: path.resolve(__dirname, '../'),
+      })
+    ]
+  }
   ```
 
 ## Support images file
