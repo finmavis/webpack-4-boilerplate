@@ -327,9 +327,32 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
     }
     ```
 
-## Support HTML Reference
+## Support HTML Images references
 
-- will be added soon
+- Install **html-loader** as development dependencies
+
+  - **html-loader** <br>
+    Exports HTML as string. HTML is minimized when the compiler demands. By default every local <img src="image.png"> is required (require('./image.png')), and this loader will resolve it.
+
+- Add new rules webpack to handle html files
+
+  ```
+  module: {
+    rules: [
+      // ... others rules configuration
+      {
+        test: /\.html$/,
+        use: {
+          loader: 'html-loader',
+          options: {
+            attrs: ['img:src', ':data-src'],
+            minimize: true,
+          },
+        },
+      },
+    ]
+  }
+  ```
 
 ## Wrap it up
 
