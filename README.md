@@ -11,6 +11,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 5. To build for production just run the script `yarn build` or `npm run build`, it will generate folder **build**.
 
 ## Getting Started
+
 - initial your project
 - **npm init** or **yarn init**
 - Create **config** and **src** folder
@@ -19,6 +20,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 - Install **webpack webpack-cli webpack-dev-server** as development dependencies
 
   - **index.html**
+
   ```
   <!DOCTYPE html>
   <html lang="en">
@@ -36,6 +38,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   ```
 
   - **index.js**
+
   ```
   const tes = () => {
     return new Promise((resolve, reject) => {
@@ -154,6 +157,7 @@ Install **html-webpack-plugin** as devDependencies
   ```
 
 - Open **package.json** and add script for webpack to compile
+
   ```
   "scripts": {
     "start": "webpack-dev-server --open --config=config/webpack.config.js"
@@ -217,7 +221,6 @@ Install **node-sass sass-loader** as devDependencies
     test: /\.(sa|sc)ss$/,
     use: [
       'style-loader',
-      MiniCssExtractPlugin.loader,
       'css-loader',
       'sass-loader'
     ]
@@ -256,7 +259,6 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
     exclude: /node_modules/,
     use: [
       'style-loader',
-      MiniCssExtractPlugin.loader,
       'css-loader',
       'postcss-loader',
     ],
@@ -266,7 +268,6 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
     exclude: /node_modules/,
     use: [
       'style-loader',
-      MiniCssExtractPlugin.loader,
       'css-loader',
       'postcss-loader',
       'sass-loader',
@@ -280,25 +281,12 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 - Edit output point of your js :
 
   ```
+  const WebpackMd5Hash = require('webpack-md5-hash');
+
   output: {
     path: path.resolve(__dirname, '../build'),
     filename: '[name].[chunkhash].js',
   },
-  ```
-
-  And in plugin css
-
-  ```
-  new MiniCssExtractPlugin({
-    filename: 'style.[contenthash].css',
-  }),
-  ```
-
-  Add new plugin
-
-  ```
-  const WebpackMd5Hash = require('webpack-md5-hash');
-
   plugins: [
     new WebpackMd5Hash()
   ]
@@ -319,31 +307,22 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
   ```
 
 ## Support images file
-  - will be added soon
+
+- will be added soon
 
 ## Support HTML Reference
-  - will be added soon
 
-## Optimization
-  - Will be added soon
+- will be added soon
 
-## Separate Development and Production
+## Wrap it up
 
-- Create 2 webpack configuration
-
-  - **config/webpack.dev.js** for Development Mode
-  - **config/webpack.prod.js** for Production and optimized
-
-- Separate your code
-
-  - **webpack.dev.js**
+- **webpack.config.js**
 
   ```
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const WebpackMd5Hash = require('webpack-md5-hash');
   const CleanWebpackPlugin = require('clean-webpack-plugin');
-  const CompressionPlugin = require('compression-webpack-plugin');
 
   module.exports = {
     entry: {
@@ -367,33 +346,33 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
-            loader: 'babel-loader',
+            loader: 'babel-loader', // transpiling our JavaScript files using Babel and webpack
           },
         },
         {
           test: /\.css$/,
           exclude: /node_modules/,
           use: [
-            'style-loader',
-            'css-loader',
-            'postcss-loader',
+            'style-loader', // creates style nodes from JS strings
+            'css-loader', // translates CSS into CommonJS
+            'postcss-loader', // Loader for webpack to process CSS with PostCSS
           ],
         },
         {
           test: /\.(sa|sc)ss$/,
           exclude: /node_modules/,
           use: [
-            'style-loader',
-            'css-loader',
-            'postcss-loader',
-            'sass-loader',
+            'style-loader', // creates style nodes from JS strings
+            'css-loader', // translates CSS into CommonJS
+            'postcss-loader', // Loader for webpack to process CSS with PostCSS
+            'sass-loader', // compiles Sass to CSS, using Node Sass by default
           ],
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
           use: [
             {
-              loader: 'file-loader',
+              loader: 'file-loader', // This will resolves import/require() on a file into a url and emits the file into the output directory.
               options: {
                 name: '[name].[ext]',
                 outputPath: 'assets/images/',
@@ -402,7 +381,7 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
           ],
         },
         {
-          test: /\.html$/,
+          test: /\.html\$/,
           use: {
             loader: 'html-loader',
             options: {
@@ -425,18 +404,141 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
         filename: 'index.html',
       }),
       new WebpackMd5Hash(),
+    ],
+  };
+  ```
+
+## Optimization for Production
+
+- Create 2 webpack configuration. You can copy paste from **webpack.config.js**.
+
+  - **config/webpack.dev.js** for Development Mode
+  - **config/webpack.prod.js** for Production and optimized
+
+- Delete **webpack.config.js**
+- Update package.json `scripts` to :
+
+  ```
+  "scripts": {
+    "start": "webpack-dev-server --open --config=config/webpack.dev.js",
+    "build": "webpack --config=config/webpack.prod.js"
+  },
+  ```
+
+- Update webpack config for production.
+
+  - Update output filename to
+
+    ```
+    output: {
+      path: path.resolve(__dirname, '../build'),
+      filename: '[name].bundle.js',
+    },
+    ```
+
+  - Change `Mode` webpack to production
+
+    ```
+    mode: 'production',
+    ```
+
+  - Change `dev-tool` to use `source-map`
+
+    ```
+    devtool: 'source-map',
+    ```
+
+- Optimize CSS
+
+  - Install **mini-css-extract-plugin terser-webpack-plugin optimize-css-assets-webpack-plugin** as devDependencies
+  - Import all packages that we install on **config/webpack.prod.js**
+
+    ```
+    const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+    const TerserJSPlugin = require('terser-webpack-plugin');
+    const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+    ```
+
+  - Update **config/webpack.prod.js** for `css`, `sass` and `scss` config.
+
+    ```
+    {
+      test: /\.css$/,
+      exclude: /node_modules/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        'css-loader', // translates CSS into CommonJS
+        'postcss-loader', // Loader for webpack to process CSS with PostCSS
+      ],
+    },
+    {
+      test: /\.(sa|sc)ss$/,
+      exclude: /node_modules/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        'css-loader', // translates CSS into CommonJS
+        'postcss-loader', // Loader for webpack to process CSS with PostCSS
+        'sass-loader', // compiles Sass to CSS, using Node Sass by default
+      ],
+    },
+    ```
+
+  - Update plugins config to use `MiniCssExtractPlugin`
+
+    ```
+    plugins: [
+      // ... other config plugin
+      // This plugin will extract all css to one file
+      new MiniCssExtractPlugin({
+        filename: 'style.min.css',
+      }),
+    ]
+    ```
+
+  - Now use our css optimization
+    ```
+    module: {
+      // ... module configuration
+    }
+    optimization: {
+      minimizer: [
+        new TerserJSPlugin({}),
+        new OptimizeCSSAssetsPlugin({}),
+      ],
+    },
+    plugins: [
+      // ... Plugins configuration
+    ]
+    ```
+
+- Optimize bundle (Compression using gzip and brotli)
+
+  - Install **compression-webpack-plugin brotli-webpack-plugin** as development dependencies
+  - Import all packages that we install
+
+    ```
+    const CompressionPlugin = require('compression-webpack-plugin');
+    const BrotliPlugin = require('brotli-webpack-plugin');
+    ```
+
+  - And at plugin configuration use our compression plugin
+
+    ```
+    plugins: [
+      // ... others plugin configuration
       // ComppresionPlugin will Prepare compressed versions of assets to serve them with Content-Encoding.
       // In this case we use gzip
       // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
       new CompressionPlugin({
         algorithm: 'gzip',
       }),
-    ],
-  };
+      new BrotliPlugin({}),
+    ]
+    ```
 
-  ```
+## Wrap it up (Production)
 
-  - **webpack.prod.js**
+- **webpack.prod.js**
 
   ```
   const path = require('path');
@@ -464,7 +566,7 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
-            loader: 'babel-loader',
+            loader: 'babel-loader', // transpiling our JavaScript files using Babel and webpack
           },
         },
         {
@@ -472,8 +574,8 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
           exclude: /node_modules/,
           use: [
             MiniCssExtractPlugin.loader,
-            'css-loader',
-            'postcss-loader',
+            'css-loader', // translates CSS into CommonJS
+            'postcss-loader', // Loader for webpack to process CSS with PostCSS
           ],
         },
         {
@@ -481,16 +583,16 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
           exclude: /node_modules/,
           use: [
             MiniCssExtractPlugin.loader,
-            'css-loader',
-            'postcss-loader',
-            'sass-loader',
+            'css-loader', // translates CSS into CommonJS
+            'postcss-loader', // Loader for webpack to process CSS with PostCSS
+            'sass-loader', // compiles Sass to CSS, using Node Sass by default
           ],
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
           use: [
             {
-              loader: 'file-loader',
+              loader: 'file-loader', // This will resolves import/require() on a file into a url and emits the file into the output directory.
               options: {
                 name: '[name].[ext]',
                 outputPath: 'assets/images/',
@@ -499,7 +601,7 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
           ],
         },
         {
-          test: /\.html$/,
+          test: /\.html\$/,
           use: {
             loader: 'html-loader',
             options: {
@@ -537,17 +639,7 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
       new CompressionPlugin({
         algorithm: 'gzip',
       }),
+      new BrotliPlugin({}),
     ],
   };
   ```
-
-- Edit script to your package.json to look like this, and remove others scripts
-
-  ```
-  "scripts": {
-    "start": "webpack-dev-server --open --config=config/webpack.dev.js",
-    "build": "webpack --config=config/webpack.prod.js"
-  },
-  ```
-
-- Now delete your **webpack.config.js** because we already use separate configuration

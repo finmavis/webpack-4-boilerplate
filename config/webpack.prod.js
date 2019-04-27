@@ -79,7 +79,7 @@ module.exports = {
     // CleanWebpackPlugin will do some clean up/remove folder before build
     // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
     new CleanWebpackPlugin(['dist', 'build'], {
-      root: path.resolve(__dirname, "../"),
+      root: path.resolve(__dirname, '../'),
     }),
     // This plugin will extract all css to one file
     new MiniCssExtractPlugin({

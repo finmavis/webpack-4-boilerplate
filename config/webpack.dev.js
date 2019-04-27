@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -84,12 +83,5 @@ module.exports = {
       filename: 'index.html',
     }),
     new WebpackMd5Hash(),
-    // ComppresionPlugin will Prepare compressed versions of assets to serve them with Content-Encoding.
-    // In this case we use gzip
-    // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
-    new CompressionPlugin({
-      algorithm: 'gzip',
-    }),
-    new BrotliPlugin({}),
   ],
 };
