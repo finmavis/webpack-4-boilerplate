@@ -300,7 +300,32 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 ## Support images file
 
-- will be added soon
+- Intall **file-loader** as development dependencies
+
+  - **file-loader** <br>
+    The file-loader resolves import/require() on a file into a url and emits the file into the output directory.
+
+  - Add new rules webpack to handle images files
+
+    ```
+    module: {
+      rules: [
+        // ... others rules configuration
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            {
+              loader: 'file-loader', // This will resolves import/require() on a file into a url and emits the file into the output directory.
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'assets/images/',
+              },
+            },
+          ],
+        },
+      ]
+    }
+    ```
 
 ## Support HTML Reference
 
