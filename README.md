@@ -12,8 +12,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 ## Getting Started
 
-- initial your project
-- **npm init** or **yarn init**
+- initial your project with **npm init** or **yarn init**
 - Create **config** and **src** folder
 - Create **webpack.config.js** inside **config** folder
 - Create **index.html** and **index.js** inside **src** folder
@@ -57,19 +56,19 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 These are the packages we will be using :
 
-- **@babel/core**
+- **@babel/core** <br>
   This package, as the name would suggest, is the core package. The package is responsible for compiling javascript code and outputting usable code. By default it uses your local configuration, but we will get into that later on.
 
-- **@babel/preset-env**
+- **@babel/preset-env** <br>
   Knowing what browser supports what javascript feature is essential in transforming your code. Here is where preset-env comes in. It handles what transforms should be applied, based on your own input. You tell Babel: “I need support for these browsers” and it will transform your javascript so it will work on the list you provide.
 
-- **@babel/polyfill**
+- **@babel/polyfill** <br>
   Sometimes the browsers you want to support need a little extra help for certain features. @babel/polyfill will provide polyfills for those featured, based on what browsers you wish to support.
 
-- **babel-loader**
+- **babel-loader** <br>
   Since we will be using Webpack, this package allows us to transpile our code using Babel and Webpack.
 
-- **core-js@3**
+- **core-js@3** <br>
   It is a polyfill of the JavaScript standard library, which supports: The latest ECMAScript standard.
 
 * Create file **.babelrc** and fill it with :
@@ -137,7 +136,7 @@ These are the packages we will be using :
 
 Install **html-webpack-plugin** as devDependencies
 
-- **html-webpack-plugin**
+- **html-webpack-plugin** <br>
   This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
 
 - Open **webpack.config.js** and add :
@@ -168,16 +167,13 @@ Install **html-webpack-plugin** as devDependencies
 
 ## Support CSS
 
-Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
+Install **style-loader css-loader** as devDependencies
 
-- **style-loader**
+- **style-loader** <br>
   This package will Adds CSS to the DOM by injecting a `<style>` tag
 
-- **css-loader**
+- **css-loader** <br>
   This package will interprets @import and url() like import/require() and will resolve them.
-
-- **mini-css-extract-plugin**
-  This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
 
 - Open **webpack.config.js** and add to module.rules :
 
@@ -188,30 +184,19 @@ Install **style-loader css-loader mini-css-extract-plugin** as devDependencies
     test: /\.css$/,
     use: [
       'style-loader',
-      MiniCssExtractPlugin.loader,
       'css-loader'
     ]
   }
-  ```
-
-  And at Plugin add
-
-  ```
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'style.css',
-    }),
-  ]
   ```
 
 ## Support SASS/SCSS
 
 Install **node-sass sass-loader** as devDependencies
 
-- **node-sass**
+- **node-sass** <br>
   Node-sass is a library that provides binding for Node.js to LibSass, the C version of the popular stylesheet preprocessor, Sass. It allows you to natively compile .scss/.sass files to css at incredible speed and automatically via a connect middleware. And in this case this package is `peerDependencies` of our sass-loader
 
-- **sass-loader**
+- **sass-loader** <br>
   Loads a Sass/SCSS file and compiles it to CSS for webpack.
 
 - Change a little bit css module like this
@@ -231,13 +216,13 @@ Install **node-sass sass-loader** as devDependencies
 
 install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
-- **postcss-loader**
+- **postcss-loader** <br>
   Loader for webpack to process CSS with PostCSS
 
-- **postcss-preset-env**
+- **postcss-preset-env** <br>
   PostCSS Preset Env lets you convert modern CSS into something most browsers can understand, determining the polyfills you need based on your targeted browsers or runtime environments, using [cssdb](https://cssdb.org/). Also you can check [Can I Use](https://caniuse.com) for browserlist.
 
-- **css-nano**
+- **css-nano** <br>
   cssnano takes your nicely formatted CSS and runs it through many focused optimisations, to ensure that the final result is as small as possible for a production environment.
 
 - create **postcss.config.js** for PostCSS Config
@@ -278,6 +263,10 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 ## Caching and Hashing
 
 - install **webpack-md5-hash** as devDependencies
+
+  - **webpack-md5-hash** <br>
+    Plugin to replace a standard webpack chunkhash with md5.
+
 - Edit output point of your js :
 
   ```
@@ -295,6 +284,9 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 ## Keep Clean and Fresh
 
 - install **clean-webpack-plugin** as devDependencies
+
+  - **clean-webpack-plugin** <br>
+    A webpack plugin to remove your build folder(s) before building
 
   ```
   const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -448,72 +440,92 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
     devtool: 'source-map',
     ```
 
+  - Delete `devServer` configuration
+
 - Optimize CSS
 
   - Install **mini-css-extract-plugin terser-webpack-plugin optimize-css-assets-webpack-plugin** as devDependencies
-  - Import all packages that we install on **config/webpack.prod.js**
 
-    ```
-    const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-    const TerserJSPlugin = require('terser-webpack-plugin');
-    const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-    ```
+    - **mini-css-extract-plugin** <br>
+      This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
 
-  - Update **config/webpack.prod.js** for `css`, `sass` and `scss` config.
+    - **terser-webpack-plugin** <br>
+      This plugin will minify ours JavaScript
 
-    ```
-    {
-      test: /\.css$/,
-      exclude: /node_modules/,
-      use: [
-        MiniCssExtractPlugin.loader,
-        'css-loader', // translates CSS into CommonJS
-        'postcss-loader', // Loader for webpack to process CSS with PostCSS
-      ],
-    },
-    {
-      test: /\.(sa|sc)ss$/,
-      exclude: /node_modules/,
-      use: [
-        MiniCssExtractPlugin.loader,
-        'css-loader', // translates CSS into CommonJS
-        'postcss-loader', // Loader for webpack to process CSS with PostCSS
-        'sass-loader', // compiles Sass to CSS, using Node Sass by default
-      ],
-    },
-    ```
+    - **optimize-css-assets-webpack-plugin** <br>
+      This plugin will search for CSS assets during the Webpack build and will optimize \ minimize the CSS (by default it uses cssnano but a custom CSS processor can be specified).
 
-  - Update plugins config to use `MiniCssExtractPlugin`
+* Import all packages that we install on **config/webpack.prod.js**
 
-    ```
-    plugins: [
-      // ... other config plugin
-      // This plugin will extract all css to one file
-      new MiniCssExtractPlugin({
-        filename: 'style.min.css',
-      }),
-    ]
-    ```
+  ```
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+  const TerserJSPlugin = require('terser-webpack-plugin');
+  const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+  ```
 
-  - Now use our css optimization
-    ```
-    module: {
-      // ... module configuration
-    }
-    optimization: {
-      minimizer: [
-        new TerserJSPlugin({}),
-        new OptimizeCSSAssetsPlugin({}),
-      ],
-    },
-    plugins: [
-      // ... Plugins configuration
-    ]
-    ```
+* Update **config/webpack.prod.js** for `css`, `sass` and `scss` config.
 
-- Optimize bundle (Compression using gzip and brotli)
+  ```
+  {
+    test: /\.css$/,
+    exclude: /node_modules/,
+    use: [
+      MiniCssExtractPlugin.loader,
+      'css-loader', // translates CSS into CommonJS
+      'postcss-loader', // Loader for webpack to process CSS with PostCSS
+    ],
+  },
+  {
+    test: /\.(sa|sc)ss$/,
+    exclude: /node_modules/,
+    use: [
+      MiniCssExtractPlugin.loader,
+      'css-loader', // translates CSS into CommonJS
+      'postcss-loader', // Loader for webpack to process CSS with PostCSS
+      'sass-loader', // compiles Sass to CSS, using Node Sass by default
+    ],
+  },
+  ```
+
+* Update plugins config to use `MiniCssExtractPlugin`
+
+  ```
+  plugins: [
+    // ... other config plugin
+    // This plugin will extract all css to one file
+    new MiniCssExtractPlugin({
+      filename: 'style.min.css',
+    }),
+  ]
+  ```
+
+* Now use our css optimization
+
+  ```
+  module: {
+    // ... module configuration
+  }
+  optimization: {
+    minimizer: [
+      new TerserJSPlugin({}),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
+  },
+  plugins: [
+    // ... Plugins configuration
+  ]
+  ```
+
+* Optimize bundle (Compression using gzip and brotli)
 
   - Install **compression-webpack-plugin brotli-webpack-plugin** as development dependencies
+
+    - **compression-webpack-plugin** <br>
+      This plugin will Prepare compressed versions of assets to serve them with Content-Encoding gz.
+
+    - **brotli-webpack-plugin** <br>
+      This plugin will Prepare Brotli-compressed versions of assets to serve them with Content-Encoding: br
+
   - Import all packages that we install
 
     ```
