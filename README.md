@@ -16,9 +16,33 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 - Create `config` and `src` folder
 - Create `webpack.config.js` inside `config` folder
 - Create `index.html` and `index.js` inside `src` folder
+
+  Folder structure
+
+  ```
+  |-- config
+      |-- webpack.config.js
+  |-- src
+      |-- index.html
+      |-- index.js
+  |-- package.json
+  ```
+
 - Install `webpack webpack-cli webpack-dev-server` as development dependencies
 
-  - `index.html`
+  If you're using yarn
+
+  ```
+  yarn add --dev webpack webpack-cli webpack-dev-server
+  ```
+
+  If you're using npm
+
+  ```
+  npm install --save-dev webpack webpack-cli webpack-dev-server
+  ```
+
+- Open `src/index.html` and add code below :
 
   ```
   <!DOCTYPE html>
@@ -36,7 +60,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   </html>
   ```
 
-  - `index.js`
+- Open `src/index.js` and add code below :
 
   ```
   const tes = () => {
@@ -51,8 +75,33 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 ## Support ES6 and Beyond
 
-- Install `@babel/core @babel/preset-env babel-loader` as devDependencies
-- Install `@babel/polyfill` and `core-js@3` as dependencies
+- Install `@babel/core @babel/preset-env babel-loader` as Development Dependencies
+
+  If you're using yarn
+
+  ```
+  yarn add --dev @babel/core @babel/preset-env babel-loader
+  ```
+
+  If you're using npm
+
+  ```
+  npm install --save-dev @babel/core @babel/preset-env babel-loader
+  ```
+
+- Install `@babel/polyfill core-js@3` as dependencies
+
+  If you're using yarn
+
+  ```
+  yarn add @babel/polyfill core-js@3
+  ```
+
+  If you're using npm
+
+  ```
+  npm install --save @babel/polyfill core-js@3
+  ```
 
 These are the packages we will be using :
 
@@ -134,7 +183,7 @@ These are the packages we will be using :
 
 ## Auto Inject your bundle code to HTML
 
-Install `html-webpack-plugin` as devDependencies
+Install `html-webpack-plugin` as Development Dependencies
 
 - `html-webpack-plugin` <br>
   This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
@@ -167,7 +216,7 @@ Install `html-webpack-plugin` as devDependencies
 
 ## Support CSS
 
-Install `style-loader css-loader` as devDependencies
+Install `style-loader css-loader` as Development Dependencies
 
 - `style-loader` <br>
   This package will Adds CSS to the DOM by injecting a `<style>` tag
@@ -197,7 +246,7 @@ Install `style-loader css-loader` as devDependencies
 
 ## Support SASS/SCSS
 
-Install `node-sass sass-loader` as devDependencies
+Install `node-sass sass-loader` as Development Dependencies
 
 - `node-sass` <br>
   Node-sass is a library that provides binding for Node.js to LibSass, the C version of the popular stylesheet preprocessor, Sass. It allows you to natively compile .scss/.sass files to css at incredible speed and automatically via a connect middleware. And in this case this package is `peerDependencies` of our sass-loader
@@ -235,7 +284,7 @@ Install `node-sass sass-loader` as devDependencies
 
 ## Add PostCSS
 
-install `postcss-loader postcss-preset-env cssnano` as devDependencies
+install `postcss-loader postcss-preset-env cssnano` as Development Dependencies
 
 - `postcss-loader` <br>
   Loader for webpack to process CSS with PostCSS
@@ -283,7 +332,7 @@ install `postcss-loader postcss-preset-env cssnano` as devDependencies
 
 ## Caching and Hashing
 
-- install `webpack-md5-hash` as devDependencies
+- install `webpack-md5-hash` as Development Dependencies
 
   - `webpack-md5-hash` <br>
     Plugin to replace a standard webpack chunkhash with md5.
@@ -308,7 +357,7 @@ install `postcss-loader postcss-preset-env cssnano` as devDependencies
 
 ## Keep Clean and Fresh
 
-- install `clean-webpack-plugin` as devDependencies
+- install `clean-webpack-plugin` as Development Dependencies
 
   - `clean-webpack-plugin` <br>
     A webpack plugin to remove your build folder(s) before building
@@ -521,7 +570,7 @@ install `postcss-loader postcss-preset-env cssnano` as devDependencies
 
 - Optimize CSS
 
-  - Install `mini-css-extract-plugin terser-webpack-plugin optimize-css-assets-webpack-plugin` as devDependencies
+  - Install `mini-css-extract-plugin terser-webpack-plugin optimize-css-assets-webpack-plugin` as Development Dependencies
 
     - `mini-css-extract-plugin` <br>
       This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
