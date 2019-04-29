@@ -28,15 +28,15 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   |-- package.json
   ```
 
-- Install `webpack webpack-cli webpack-dev-server` as development dependencies
+- Install `webpack webpack-cli webpack-dev-server` as Development Dependencies
 
-  If you're using yarn
+  If you're using **yarn**
 
   ```
   yarn add --dev webpack webpack-cli webpack-dev-server
   ```
 
-  If you're using npm
+  If you're using **npm**
 
   ```
   npm install --save-dev webpack webpack-cli webpack-dev-server
@@ -77,13 +77,13 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 - Install `@babel/core @babel/preset-env babel-loader` as Development Dependencies
 
-  If you're using yarn
+  If you're using **yarn**
 
   ```
   yarn add --dev @babel/core @babel/preset-env babel-loader
   ```
 
-  If you're using npm
+  If you're using **npm**
 
   ```
   npm install --save-dev @babel/core @babel/preset-env babel-loader
@@ -91,19 +91,19 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 - Install `@babel/polyfill core-js@3` as dependencies
 
-  If you're using yarn
+  If you're using **yarn**
 
   ```
   yarn add @babel/polyfill core-js@3
   ```
 
-  If you're using npm
+  If you're using **npm**
 
   ```
   npm install --save @babel/polyfill core-js@3
   ```
 
-  Notes : These are the packages we will be using :
+  **Notes** : These are the packages we will be using :
 
   - `@babel/core` <br>
     This package, as the name would suggest, is the core package. The package is responsible for compiling javascript code and outputting usable code. By default it uses your local configuration, but we will get into that later on.
@@ -181,14 +181,28 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   };
   ```
 
-## Auto Inject your bundle code to HTML
+## Auto Inject your bundle javascript code to HTML
 
-Install `html-webpack-plugin` as Development Dependencies
+- Install `html-webpack-plugin` as Development Dependencies
 
-- `html-webpack-plugin` <br>
-  This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
+  If you're using **yarn**
 
-- Open `webpack.config.js` and add :
+  ```
+  yarn add --dev html-webpack-plugin
+  ```
+
+  If you're using **npm**
+
+  ```
+  npm install --save-dev html-webpack-plugin
+  ```
+
+  **Notes** : These are the packages we will be using :
+
+  - `html-webpack-plugin` <br>
+    This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
+
+- Open `config/webpack.config.js` and add code below :
 
   ```
   const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -212,19 +226,33 @@ Install `html-webpack-plugin` as Development Dependencies
   },
   ```
 
-- Now you can start your `development` by running `npm start` or `yarn start`
+- Now you can start your `development` by running `npm run start` or `yarn start`.
 
 ## Support CSS
 
-Install `style-loader css-loader` as Development Dependencies
+- Install `style-loader css-loader` as Development Dependencies
 
-- `style-loader` <br>
-  This package will Adds CSS to the DOM by injecting a `<style>` tag
+  If you're using **yarn**
 
-- `css-loader` <br>
-  This package will interprets @import and url() like import/require() and will resolve them.
+  ```
+  yarn add --dev style-loader css-loader
+  ```
 
-- Open `webpack.config.js` and add to module.rules :
+  If you're using **npm**
+
+  ```
+  npm install --save-dev style-loader css-loader
+  ```
+
+  **Notes** : These are the packages we will be using :
+
+  - `style-loader` <br>
+    This package will Adds CSS to the DOM by injecting a `<style>` tag
+
+  - `css-loader` <br>
+    This package will interprets @import and url() like import/require() and will resolve them.
+
+- Open `config/webpack.config.js` and add to module.rules :
 
   ```
   module.exports = {
@@ -246,15 +274,29 @@ Install `style-loader css-loader` as Development Dependencies
 
 ## Support SASS/SCSS
 
-Install `node-sass sass-loader` as Development Dependencies
+- Install `node-sass sass-loader` as Development Dependencies
 
-- `node-sass` <br>
-  Node-sass is a library that provides binding for Node.js to LibSass, the C version of the popular stylesheet preprocessor, Sass. It allows you to natively compile .scss/.sass files to css at incredible speed and automatically via a connect middleware. And in this case this package is `peerDependencies` of our sass-loader
+  If you're using **yarn**
 
-- `sass-loader` <br>
-  Loads a Sass/SCSS file and compiles it to CSS for webpack.
+  ```
+  yarn add --dev node-sass sass-loader
+  ```
 
-- Change a little bit css module like this
+  If you're using **npm**
+
+  ```
+  npm install --save-dev node-sass sass-loader
+  ```
+
+  **Notes** : These are the packages we will be using :
+
+  - `node-sass` <br>
+    Node-sass is a library that provides binding for Node.js to LibSass, the C version of the popular stylesheet preprocessor, Sass. It allows you to natively compile .scss/.sass files to css at incredible speed and automatically via a connect middleware.
+
+  - `sass-loader` <br>
+    Loads a Sass/SCSS file and compiles it to CSS for webpack.
+
+- Open `config/webpack.config.js` and change a little bit css module like this
 
   ```
   module.exports = {
@@ -282,18 +324,32 @@ Install `node-sass sass-loader` as Development Dependencies
   }
   ```
 
-## Add PostCSS
+## Add PostCSS/Autoprefixer
 
-install `postcss-loader postcss-preset-env cssnano` as Development Dependencies
+- Install `postcss-loader postcss-preset-env cssnano` as Development Dependencies
 
-- `postcss-loader` <br>
-  Loader for webpack to process CSS with PostCSS
+  If you're using **yarn**
 
-- `postcss-preset-env` <br>
-  PostCSS Preset Env lets you convert modern CSS into something most browsers can understand, determining the polyfills you need based on your targeted browsers or runtime environments, using [cssdb](https://cssdb.org/). Also you can check [Can I Use](https://caniuse.com) for browserlist.
+  ```
+  yarn add --dev postcss-loader postcss-preset-env cssnano
+  ```
 
-- `css-nano` <br>
-  cssnano takes your nicely formatted CSS and runs it through many focused optimisations, to ensure that the final result is as small as possible for a production environment.
+  If you're using **npm**
+
+  ```
+  npm install --save-dev postcss-loader postcss-preset-env cssnano
+  ```
+
+  **Notes** : These are the packages we will be using :
+
+  - `postcss-loader` <br>
+    Loader for webpack to process CSS with PostCSS
+
+  - `postcss-preset-env` <br>
+    PostCSS Preset Env lets you convert modern CSS into something most browsers can understand, determining the polyfills you need based on your targeted browsers or runtime environments, using [cssdb](https://cssdb.org/). Also you can check [Can I Use](https://caniuse.com) for browserlist.
+
+  - `css-nano` <br>
+    cssnano takes your nicely formatted CSS and runs it through many focused optimisations, to ensure that the final result is as small as possible for a production environment.
 
 - create `postcss.config.js` for PostCSS Config
 
@@ -306,28 +362,36 @@ install `postcss-loader postcss-preset-env cssnano` as Development Dependencies
   }
   ```
 
-- Add postcss to your `css`, `sass` and `scss` loader
+- Add `postcss` to your `css`, `sass` and `scss` loader
 
   ```
-  {
-    test: /\.css$/,
-    exclude: /node_modules/,
-    use: [
-      'style-loader',
-      'css-loader',
-      'postcss-loader',
-    ],
-  },
-  {
-    test: /\.(sa|sc)ss$/,
-    exclude: /node_modules/,
-    use: [
-      'style-loader',
-      'css-loader',
-      'postcss-loader',
-      'sass-loader',
-    ],
-  },
+  module.exports = {
+    // ... others configuration
+    module: {
+      rules: [
+        // ... others module rules configuration
+        {
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: [
+            'style-loader',
+            'css-loader',
+            'postcss-loader',
+          ],
+        },
+        {
+          test: /\.(sa|sc)ss$/,
+          exclude: /node_modules/,
+          use: [
+            'style-loader',
+            'css-loader',
+            'postcss-loader',
+            'sass-loader',
+          ],
+        },
+      ]
+    },
+  }
   ```
 
 ## Caching and Hashing
