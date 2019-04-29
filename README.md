@@ -103,24 +103,24 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   npm install --save @babel/polyfill core-js@3
   ```
 
-These are the packages we will be using :
+  Notes : These are the packages we will be using :
 
-- `@babel/core` <br>
-  This package, as the name would suggest, is the core package. The package is responsible for compiling javascript code and outputting usable code. By default it uses your local configuration, but we will get into that later on.
+  - `@babel/core` <br>
+    This package, as the name would suggest, is the core package. The package is responsible for compiling javascript code and outputting usable code. By default it uses your local configuration, but we will get into that later on.
 
-- `@babel/preset-env` <br>
-  Knowing what browser supports what javascript feature is essential in transforming your code. Here is where preset-env comes in. It handles what transforms should be applied, based on your own input. You tell Babel: “I need support for these browsers” and it will transform your javascript so it will work on the list you provide.
+  - `@babel/preset-env` <br>
+    Knowing what browser supports what javascript feature is essential in transforming your code. Here is where preset-env comes in. It handles what transforms should be applied, based on your own input. You tell Babel: “I need support for these browsers” and it will transform your javascript so it will work on the list you provide.
 
-- `@babel/polyfill` <br>
-  Sometimes the browsers you want to support need a little extra help for certain features. @babel/polyfill will provide polyfills for those featured, based on what browsers you wish to support.
+  - `@babel/polyfill` <br>
+    Sometimes the browsers you want to support need a little extra help for certain features. @babel/polyfill will provide polyfills for those featured, based on what browsers you wish to support.
 
-- `babel-loader` <br>
-  Since we will be using Webpack, this package allows us to transpile our code using Babel and Webpack.
+  - `babel-loader` <br>
+    Since we will be using Webpack, this package allows us to transpile our code using Babel and Webpack.
 
-- `core-js@3` <br>
-  It is a polyfill of the JavaScript standard library, which supports: The latest ECMAScript standard.
+  - `core-js@3` <br>
+    It is a polyfill of the JavaScript standard library, which supports: The latest ECMAScript standard.
 
-* Create file `.babelrc` and fill it with :
+- Create file `.babelrc` and fill it with :
 
   ```
   {
@@ -134,7 +134,7 @@ These are the packages we will be using :
   }
   ```
 
-* Then add your target browser you want to support in `package.json`. <br>
+- Then add your target browser you want to support in `package.json`. <br>
   Note: you can check browserlist [Here](https://browserl.ist/) <br>
   In this case we will use this configuration :
 
@@ -146,7 +146,7 @@ These are the packages we will be using :
   ]
   ```
 
-* Let's use babel with webpack, create `webpack.config.js` file inside `config` folder, and code inside file is
+- Let's use babel with webpack, create `webpack.config.js` file inside `config` folder, and code inside file is
 
   ```
   const path = require("path");
