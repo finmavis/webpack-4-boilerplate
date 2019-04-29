@@ -14,8 +14,9 @@
 - [Clean up before build](#keep-clean-and-fresh)
 - [Add images configuration](#support-images-file)
 - [Add html configuration for Images references](#support-html-images-references)
-- [Full Code](#wrap-it-up)
+- [Full Code webpack.config.js](#wrap-it-up)
 - [Optimization for Production](#optimization-for-production)
+- [Full code webpack config Production](<#wrap-it-up-(Production)>)
 
 ## TL;DR
 
