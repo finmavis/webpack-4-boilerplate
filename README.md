@@ -553,7 +553,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   **Notes** : These are the packages we will be using :
 
   - `html-loader` <br>
-    Exports HTML as string. HTML is minimized when the compiler demands. By default every local <img src="image.png"> is required (require('./image.png')), and this loader will resolve it.
+    Exports HTML as string. HTML is minimized when the compiler demands. By default every local `<img src="image.png">` is required `require('./image.png')`, and this loader will resolve it.
 
 - Open `config/webpack.config.js` and Add new rules webpack to handle html files
 
