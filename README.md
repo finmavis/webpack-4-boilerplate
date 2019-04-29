@@ -8,17 +8,17 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 2. Navigate to folder you just clone
 3. Install all Dependencies, `yarn` or `npm install`
 4. Then for development just run the script `yarn start` or `npm run start`
-5. To build for production just run the script `yarn build` or `npm run build`, it will generate folder **build**.
+5. To build for production just run the script `yarn build` or `npm run build`, it will generate folder `build`.
 
 ## Getting Started
 
-- initial your project with **npm init** or **yarn init**
-- Create **config** and **src** folder
-- Create **webpack.config.js** inside **config** folder
-- Create **index.html** and **index.js** inside **src** folder
-- Install **webpack webpack-cli webpack-dev-server** as development dependencies
+- initial your project with `npm init` or `yarn init`
+- Create `config` and `src` folder
+- Create `webpack.config.js` inside `config` folder
+- Create `index.html` and `index.js` inside `src` folder
+- Install `webpack webpack-cli webpack-dev-server` as development dependencies
 
-  - **index.html**
+  - `index.html`
 
   ```
   <!DOCTYPE html>
@@ -36,7 +36,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   </html>
   ```
 
-  - **index.js**
+  - `index.js`
 
   ```
   const tes = () => {
@@ -51,27 +51,27 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 ## Support ES6 and Beyond
 
-- Install **@babel/core @babel/preset-env babel-loader** as devDependencies
-- Install **@babel/polyfill** and **core-js@3** as dependencies
+- Install `@babel/core @babel/preset-env babel-loader` as devDependencies
+- Install `@babel/polyfill` and `core-js@3` as dependencies
 
 These are the packages we will be using :
 
-- **@babel/core** <br>
+- `@babel/core` <br>
   This package, as the name would suggest, is the core package. The package is responsible for compiling javascript code and outputting usable code. By default it uses your local configuration, but we will get into that later on.
 
-- **@babel/preset-env** <br>
+- `@babel/preset-env` <br>
   Knowing what browser supports what javascript feature is essential in transforming your code. Here is where preset-env comes in. It handles what transforms should be applied, based on your own input. You tell Babel: “I need support for these browsers” and it will transform your javascript so it will work on the list you provide.
 
-- **@babel/polyfill** <br>
+- `@babel/polyfill` <br>
   Sometimes the browsers you want to support need a little extra help for certain features. @babel/polyfill will provide polyfills for those featured, based on what browsers you wish to support.
 
-- **babel-loader** <br>
+- `babel-loader` <br>
   Since we will be using Webpack, this package allows us to transpile our code using Babel and Webpack.
 
-- **core-js@3** <br>
+- `core-js@3` <br>
   It is a polyfill of the JavaScript standard library, which supports: The latest ECMAScript standard.
 
-* Create file **.babelrc** and fill it with :
+* Create file `.babelrc` and fill it with :
 
   ```
   {
@@ -97,7 +97,7 @@ These are the packages we will be using :
   ]
   ```
 
-* Let's use babel with webpack, create **webpack.config.js** file inside **config** folder, and code inside file is
+* Let's use babel with webpack, create `webpack.config.js` file inside `config` folder, and code inside file is
 
   ```
   const path = require("path");
@@ -134,12 +134,12 @@ These are the packages we will be using :
 
 ## Auto Inject your bundle code to HTML
 
-Install **html-webpack-plugin** as devDependencies
+Install `html-webpack-plugin` as devDependencies
 
-- **html-webpack-plugin** <br>
+- `html-webpack-plugin` <br>
   This is a webpack plugin that simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation.
 
-- Open **webpack.config.js** and add :
+- Open `webpack.config.js` and add :
 
   ```
   const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -155,7 +155,7 @@ Install **html-webpack-plugin** as devDependencies
   }
   ```
 
-- Open **package.json** and add script for webpack to compile
+- Open `package.json` and add script for webpack to compile
 
   ```
   "scripts": {
@@ -167,15 +167,15 @@ Install **html-webpack-plugin** as devDependencies
 
 ## Support CSS
 
-Install **style-loader css-loader** as devDependencies
+Install `style-loader css-loader` as devDependencies
 
-- **style-loader** <br>
+- `style-loader` <br>
   This package will Adds CSS to the DOM by injecting a `<style>` tag
 
-- **css-loader** <br>
+- `css-loader` <br>
   This package will interprets @import and url() like import/require() and will resolve them.
 
-- Open **webpack.config.js** and add to module.rules :
+- Open `webpack.config.js` and add to module.rules :
 
   ```
   module.exports = {
@@ -197,12 +197,12 @@ Install **style-loader css-loader** as devDependencies
 
 ## Support SASS/SCSS
 
-Install **node-sass sass-loader** as devDependencies
+Install `node-sass sass-loader` as devDependencies
 
-- **node-sass** <br>
+- `node-sass` <br>
   Node-sass is a library that provides binding for Node.js to LibSass, the C version of the popular stylesheet preprocessor, Sass. It allows you to natively compile .scss/.sass files to css at incredible speed and automatically via a connect middleware. And in this case this package is `peerDependencies` of our sass-loader
 
-- **sass-loader** <br>
+- `sass-loader` <br>
   Loads a Sass/SCSS file and compiles it to CSS for webpack.
 
 - Change a little bit css module like this
@@ -235,18 +235,18 @@ Install **node-sass sass-loader** as devDependencies
 
 ## Add PostCSS
 
-install **postcss-loader postcss-preset-env cssnano** as devDependencies
+install `postcss-loader postcss-preset-env cssnano` as devDependencies
 
-- **postcss-loader** <br>
+- `postcss-loader` <br>
   Loader for webpack to process CSS with PostCSS
 
-- **postcss-preset-env** <br>
+- `postcss-preset-env` <br>
   PostCSS Preset Env lets you convert modern CSS into something most browsers can understand, determining the polyfills you need based on your targeted browsers or runtime environments, using [cssdb](https://cssdb.org/). Also you can check [Can I Use](https://caniuse.com) for browserlist.
 
-- **css-nano** <br>
+- `css-nano` <br>
   cssnano takes your nicely formatted CSS and runs it through many focused optimisations, to ensure that the final result is as small as possible for a production environment.
 
-- create **postcss.config.js** for PostCSS Config
+- create `postcss.config.js` for PostCSS Config
 
   ```
   module.exports = {
@@ -283,9 +283,9 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 ## Caching and Hashing
 
-- install **webpack-md5-hash** as devDependencies
+- install `webpack-md5-hash` as devDependencies
 
-  - **webpack-md5-hash** <br>
+  - `webpack-md5-hash` <br>
     Plugin to replace a standard webpack chunkhash with md5.
 
 - Edit output point of your js :
@@ -308,9 +308,9 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 ## Keep Clean and Fresh
 
-- install **clean-webpack-plugin** as devDependencies
+- install `clean-webpack-plugin` as devDependencies
 
-  - **clean-webpack-plugin** <br>
+  - `clean-webpack-plugin` <br>
     A webpack plugin to remove your build folder(s) before building
 
   ```
@@ -329,9 +329,9 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 ## Support images file
 
-- Intall **file-loader** as development dependencies
+- Intall `file-loader` as development dependencies
 
-  - **file-loader** <br>
+  - `file-loader` <br>
     The file-loader resolves import/require() on a file into a url and emits the file into the output directory.
 
   - Add new rules webpack to handle images files
@@ -358,9 +358,9 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 ## Support HTML Images references
 
-- Install **html-loader** as development dependencies
+- Install `html-loader` as development dependencies
 
-  - **html-loader** <br>
+  - `html-loader` <br>
     Exports HTML as string. HTML is minimized when the compiler demands. By default every local <img src="image.png"> is required (require('./image.png')), and this loader will resolve it.
 
 - Add new rules webpack to handle html files
@@ -385,7 +385,7 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 ## Wrap it up
 
-- **webpack.config.js**
+- `webpack.config.js`
 
   ```
   const path = require('path');
@@ -479,12 +479,12 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 ## Optimization for Production
 
-- Create 2 webpack configuration. You can copy paste from **webpack.config.js**.
+- Create 2 webpack configuration. You can copy paste from `webpack.config.js`.
 
-  - **config/webpack.dev.js** for Development Mode
-  - **config/webpack.prod.js** for Production and optimized
+  - `config/webpack.dev.js` for Development Mode
+  - `config/webpack.prod.js` for Production and optimized
 
-- Delete **webpack.config.js**
+- Delete `webpack.config.js`
 - Update package.json `scripts` to :
 
   ```
@@ -521,18 +521,18 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 - Optimize CSS
 
-  - Install **mini-css-extract-plugin terser-webpack-plugin optimize-css-assets-webpack-plugin** as devDependencies
+  - Install `mini-css-extract-plugin terser-webpack-plugin optimize-css-assets-webpack-plugin` as devDependencies
 
-    - **mini-css-extract-plugin** <br>
+    - `mini-css-extract-plugin` <br>
       This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
 
-    - **terser-webpack-plugin** <br>
+    - `terser-webpack-plugin` <br>
       This plugin will minify ours JavaScript
 
-    - **optimize-css-assets-webpack-plugin** <br>
+    - `optimize-css-assets-webpack-plugin` <br>
       This plugin will search for CSS assets during the Webpack build and will optimize \ minimize the CSS (by default it uses cssnano but a custom CSS processor can be specified).
 
-* Import all packages that we install on **config/webpack.prod.js**
+* Import all packages that we install on `config/webpack.prod.js`
 
   ```
   const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -540,7 +540,7 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
   const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
   ```
 
-* Update **config/webpack.prod.js** for `css`, `sass` and `scss` config.
+* Update `config/webpack.prod.js` for `css`, `sass` and `scss` config.
 
   ```
   {
@@ -595,12 +595,12 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 * Optimize bundle (Compression using gzip and brotli)
 
-  - Install **compression-webpack-plugin brotli-webpack-plugin** as development dependencies
+  - Install `compression-webpack-plugin brotli-webpack-plugin` as development dependencies
 
-    - **compression-webpack-plugin** <br>
+    - `compression-webpack-plugin` <br>
       This plugin will Prepare compressed versions of assets to serve them with Content-Encoding gz.
 
-    - **brotli-webpack-plugin** <br>
+    - `brotli-webpack-plugin` <br>
       This plugin will Prepare Brotli-compressed versions of assets to serve them with Content-Encoding: br
 
   - Import all packages that we install
@@ -627,7 +627,7 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
 
 ## Wrap it up (Production)
 
-- **webpack.prod.js**
+- `webpack.prod.js`
 
   ```
   const path = require('path');
