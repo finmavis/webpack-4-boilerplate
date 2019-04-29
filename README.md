@@ -396,12 +396,26 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 ## Caching and Hashing
 
-- install `webpack-md5-hash` as Development Dependencies
+- Install `webpack-md5-hash` as Development Dependencies
+
+  If you're using **yarn**
+
+  ```
+  yarn add --dev webpack-md5-hash
+  ```
+
+  If you're using **npm**
+
+  ```
+  npm install --save-dev webpack-md5-hash
+  ```
+
+  **Notes** : These are the packages we will be using :
 
   - `webpack-md5-hash` <br>
     Plugin to replace a standard webpack chunkhash with md5.
 
-- Edit output point of your js :
+- Open `config/webpack.config.js` and Edit output point of your js :
 
   ```
   const WebpackMd5Hash = require('webpack-md5-hash');
@@ -421,10 +435,26 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 ## Keep Clean and Fresh
 
-- install `clean-webpack-plugin` as Development Dependencies
+- Install `clean-webpack-plugin` as Development Dependencies
+
+  If you're using **yarn**
+
+  ```
+  yarn add --dev clean-webpack-plugin
+  ```
+
+  If you're using **npm**
+
+  ```
+  npm install --save-dev clean-webpack-plugin
+  ```
+
+  **Notes** : These are the packages we will be using :
 
   - `clean-webpack-plugin` <br>
     A webpack plugin to remove your build folder(s) before building
+
+- Open `config/webpack.config.js` and add code below :
 
   ```
   const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -444,12 +474,28 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 - Intall `file-loader` as development dependencies
 
+  If you're using **yarn**
+
+  ```
+  yarn add --dev file-loader
+  ```
+
+  If you're using **npm**
+
+  ```
+  npm install --save-dev file-loader
+  ```
+
+  **Notes** : These are the packages we will be using :
+
   - `file-loader` <br>
     The file-loader resolves import/require() on a file into a url and emits the file into the output directory.
 
-  - Add new rules webpack to handle images files
+- Open `config/webpack.config.js` and add Add new rules webpack to handle images files
 
-    ```
+  ```
+  module.exports = {
+    // ... others configuration
     module: {
       rules: [
         // ... others rules configuration
@@ -457,7 +503,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
           test: /\.(png|svg|jpg|gif)$/,
           use: [
             {
-              loader: 'file-loader', // This will resolves import/require() on a file into a url and emits the file into the output directory.
+              loader: 'file-loader',
               options: {
                 name: '[name].[ext]',
                 outputPath: 'assets/images/',
@@ -467,38 +513,56 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         },
       ]
     }
-    ```
+  }
+  ```
 
 ## Support HTML Images references
 
 - Install `html-loader` as development dependencies
 
+  If you're using **yarn**
+
+  ```
+  yarn add --dev html-loader
+  ```
+
+  If you're using **npm**
+
+  ```
+  npm install --save-dev html-loader
+  ```
+
+  **Notes** : These are the packages we will be using :
+
   - `html-loader` <br>
     Exports HTML as string. HTML is minimized when the compiler demands. By default every local <img src="image.png"> is required (require('./image.png')), and this loader will resolve it.
 
-- Add new rules webpack to handle html files
+- Open `config/webpack.config.js` and Add new rules webpack to handle html files
 
   ```
-  module: {
-    rules: [
-      // ... others rules configuration
-      {
-        test: /\.html$/,
-        use: {
-          loader: 'html-loader',
-          options: {
-            attrs: ['img:src', ':data-src'],
-            minimize: true,
+  module.exports = {
+    // ... others configuration
+    module: {
+      rules: [
+        // ... others rules configuration
+        {
+          test: /\.html$/,
+          use: {
+            loader: 'html-loader',
+            options: {
+              attrs: ['img:src', ':data-src'],
+              minimize: true,
+            },
           },
         },
-      },
-    ]
+      ]
+    }
   }
   ```
 
 ## Wrap it up
 
-- `webpack.config.js`
+- All code inside `webpack.config.js` :
 
   ```
   const path = require('path');
