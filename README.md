@@ -1,5 +1,22 @@
 # Webpack 4 Boilerplate
 
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+- [TL;DR](#TL;DR)
+- [Getting Started](#getting-started)
+- [Support ES6 and Beyond](#support-es6-and-beyond)
+- [Auto Inject bundle to HTML](#auto-inject-your-bundle-javascript-code-to-html)
+- [Add CSS configuration](#support-css)
+- [Add SASS/SCSS configuration](#support-sass/scss)
+- [Add PostCSS/Autoprefixer](#add-postcss/autoprefixer)
+- [Caching and Hashing](#caching-and-hashing)
+- [Clean up before build](#keep-clean-and-fresh)
+- [Add images configuration](#support-images-file)
+- [Add html configuration for Images references](#support-html-images-references)
+- [Full Code](#wrap-it-up)
+- [Optimization for Production](#optimization-for-production)
+
 ## TL;DR
 
 If you only want to use this webpack 4 configuration and dont want to know how to implement it, well just clone this repo and start develop.
