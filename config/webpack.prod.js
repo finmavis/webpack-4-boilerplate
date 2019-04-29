@@ -13,7 +13,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../build'),
-    filename: 'main.bundle.js',
+    filename: '[name].bundle.js',
   },
   mode: 'production',
   devtool: 'source-map',

@@ -144,7 +144,7 @@ Install **html-webpack-plugin** as devDependencies
   ```
   const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-  module.export = {
+  module.exports = {
     // ... others configuration,
     plugins: [
       new HtmlWebpackPlugin({
@@ -178,7 +178,7 @@ Install **style-loader css-loader** as devDependencies
 - Open **webpack.config.js** and add to module.rules :
 
   ```
-  module.export = {
+  module.exports = {
     // ... others configuration
     module: {
       rules: [
@@ -208,7 +208,7 @@ Install **node-sass sass-loader** as devDependencies
 - Change a little bit css module like this
 
   ```
-  module.export = {
+  module.exports = {
     // ... others configuration
     module: {
       rules: [
@@ -293,7 +293,7 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
   ```
   const WebpackMd5Hash = require('webpack-md5-hash');
 
-  module.export = {
+  module.exports = {
     // ... others configuration
     output: {
       path: path.resolve(__dirname, '../build'),
@@ -316,7 +316,7 @@ install **postcss-loader postcss-preset-env cssnano** as devDependencies
   ```
   const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-  module.export = {
+  module.exports = {
     // ... others configuration
     plugins: [
       // ... others plugins configuration
