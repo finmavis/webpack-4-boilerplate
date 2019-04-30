@@ -18,7 +18,7 @@ module.exports = {
     port: 3000,
     overlay: true,
   },
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-eval-source-map',
   module: {
     rules: [
       {
