@@ -12,3 +12,10 @@ async function run() {
 }
 
 run();
+
+async function lazyLoadExample() {
+  const { lazyLoad } = await import('./lazy-load-example');
+  lazyLoad().then(res => console.log(res));
+};
+
+document.querySelector("#lazy-load").addEventListener('click', lazyLoadExample);

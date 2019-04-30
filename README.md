@@ -817,6 +817,12 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   }
   ```
 
+- Lazy load
+
+  - Install `@babel/plugin-syntax-dynamic-import`.
+  - Update plugin .babelrc
+  - Will be update soon
+
 - Optimize bundle (Compression using gzip and brotli)
 
   - Install `compression-webpack-plugin brotli-webpack-plugin` as development dependencies

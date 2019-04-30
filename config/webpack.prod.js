@@ -14,6 +14,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../build'),
     filename: '[name].bundle.js',
+    chunkFilename: '[name].chunk.js',
   },
   mode: 'production',
   devtool: 'source-map',
@@ -74,6 +75,18 @@ module.exports = {
       new TerserJSPlugin({}),
       new OptimizeCSSAssetsPlugin({}),
     ],
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      }
+    },
+    runtimeChunk: {
+      name: 'runtime'
+    },
   },
   plugins: [
     // CleanWebpackPlugin will do some clean up/remove folder before build
