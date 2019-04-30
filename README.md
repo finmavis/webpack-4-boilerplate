@@ -490,7 +490,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
 ## Support images file
 
-- Intall `file-loader` as development dependencies
+- Install `file-loader` as development dependencies
 
   If you're using **yarn**
 
@@ -689,9 +689,9 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   },
   ```
 
-- Update webpack config for production.
+- Update webpack config for production `config/webpack.prod.js`.
 
-  - Update output filename to
+  - Update `output` filename to
 
     ```
     output: {
@@ -714,20 +714,34 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
   - Delete `devServer` configuration
 
-- Optimize CSS
+- Optimize CSS and JS
 
   - Install `mini-css-extract-plugin terser-webpack-plugin optimize-css-assets-webpack-plugin` as Development Dependencies
+
+    If you're using **yarn**
+
+    ```
+    yarn add --dev mini-css-extract-plugin terser-webpack-plugin optimize-css-assets-webpack-plugin
+    ```
+
+    If you're using **npm**
+
+    ```
+    npm install --save-dev mini-css-extract-plugin terser-webpack-plugin optimize-css-assets-webpack-plugin
+    ```
+
+    **Notes** : These are the packages we will be using :
 
     - `mini-css-extract-plugin` <br>
       This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS. It supports On-Demand-Loading of CSS and SourceMaps.
 
     - `terser-webpack-plugin` <br>
-      This plugin will minify ours JavaScript
+      This plugin will minify ours JavaScript.
 
     - `optimize-css-assets-webpack-plugin` <br>
       This plugin will search for CSS assets during the Webpack build and will optimize \ minimize the CSS (by default it uses cssnano but a custom CSS processor can be specified).
 
-* Import all packages that we install on `config/webpack.prod.js`
+- Import all packages that we install in `config/webpack.prod.js`
 
   ```
   const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -735,62 +749,91 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
   ```
 
-* Update `config/webpack.prod.js` for `css`, `sass` and `scss` config.
+- Update `config/webpack.prod.js` for `css`, `sass` and `scss` rules config.
 
   ```
-  {
-    test: /\.css$/,
-    exclude: /node_modules/,
-    use: [
-      MiniCssExtractPlugin.loader,
-      'css-loader', // translates CSS into CommonJS
-      'postcss-loader', // Loader for webpack to process CSS with PostCSS
-    ],
-  },
-  {
-    test: /\.(sa|sc)ss$/,
-    exclude: /node_modules/,
-    use: [
-      MiniCssExtractPlugin.loader,
-      'css-loader', // translates CSS into CommonJS
-      'postcss-loader', // Loader for webpack to process CSS with PostCSS
-      'sass-loader', // compiles Sass to CSS, using Node Sass by default
-    ],
-  },
-  ```
-
-* Update plugins config to use `MiniCssExtractPlugin`
-
-  ```
-  plugins: [
-    // ... other config plugin
-    // This plugin will extract all css to one file
-    new MiniCssExtractPlugin({
-      filename: 'style.min.css',
-    }),
-  ]
-  ```
-
-* Now use our css optimization
-
-  ```
-  module: {
-    // ... module configuration
+  module.exports = {
+    // ... others configuration
+    module: {
+      rules: [
+        // ... others rules configuration
+        {
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader', // translates CSS into CommonJS
+            'postcss-loader', // Loader for webpack to process CSS with PostCSS
+          ],
+        },
+        {
+          test: /\.(sa|sc)ss$/,
+          exclude: /node_modules/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader', // translates CSS into CommonJS
+            'postcss-loader', // Loader for webpack to process CSS with PostCSS
+            'sass-loader', // compiles Sass to CSS, using Node Sass by default
+          ],
+        },
+      ]
+    }
   }
-  optimization: {
-    minimizer: [
-      new TerserJSPlugin({}),
-      new OptimizeCSSAssetsPlugin({}),
-    ],
-  },
-  plugins: [
-    // ... Plugins configuration
-  ]
   ```
 
-* Optimize bundle (Compression using gzip and brotli)
+- Update `plugins` config to use `MiniCssExtractPlugin`
+
+  ```
+  module.exports = {
+    // ... others configuration
+    plugins: [
+      // ... others plugins configuration
+      // This plugin will extract all css to one file
+      new MiniCssExtractPlugin({
+        filename: 'style.min.css',
+      }),
+    ]
+  }
+
+  ```
+
+- Now use our `css` and `js` optimization
+
+  ```
+  module.exports = {
+    // ... others configuration
+    module: {
+      // ... module configuration
+    }
+    optimization: {
+      minimizer: [
+        new TerserJSPlugin({}),
+        new OptimizeCSSAssetsPlugin({}),
+      ],
+    },
+    plugins: [
+      // ... Plugins configuration
+    ]
+  }
+  ```
+
+- Optimize bundle (Compression using gzip and brotli)
 
   - Install `compression-webpack-plugin brotli-webpack-plugin` as development dependencies
+
+    If you're using **yarn**
+
+    ```
+    yarn add --dev compression-webpack-plugin brotli-webpack-plugin
+    ```
+
+    If you're using **npm**
+
+    ```
+    npm install --save-dev compression-webpack-plugin brotli-webpack-plugin
+    ```
+
+    **Notes** : These are the packages we will be using :
 
     - `compression-webpack-plugin` <br>
       This plugin will Prepare compressed versions of assets to serve them with Content-Encoding gz.
@@ -805,19 +848,22 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     const BrotliPlugin = require('brotli-webpack-plugin');
     ```
 
-  - And at plugin configuration use our compression plugin
+  - And at `plugin` configuration use our compression plugin
 
     ```
-    plugins: [
-      // ... others plugin configuration
-      // ComppresionPlugin will Prepare compressed versions of assets to serve them with Content-Encoding.
-      // In this case we use gzip
-      // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
-      new CompressionPlugin({
-        algorithm: 'gzip',
-      }),
-      new BrotliPlugin({}),
-    ]
+    module.exports = {
+      // ... others configuration
+      plugins: [
+        // ... others plugin configuration
+        // ComppresionPlugin will Prepare compressed versions of assets to serve them with Content-Encoding.
+        // In this case we use gzip
+        // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
+        new CompressionPlugin({
+          algorithm: 'gzip',
+        }),
+        new BrotliPlugin({}),
+      ]
+    }
     ```
 
 ## Wrap it up (Production)
