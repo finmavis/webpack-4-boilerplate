@@ -3,20 +3,20 @@
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
-- [TL;DR](#TL;DR)
+- [TL;DR](#tldr)
 - [Getting Started](#getting-started)
 - [Support ES6 and Beyond](#support-es6-and-beyond)
 - [Auto Inject bundle to HTML](#auto-inject-your-bundle-javascript-code-to-html)
 - [Add CSS configuration](#support-css)
-- [Add SASS/SCSS configuration](#support-sass/scss)
-- [Add PostCSS/Autoprefixer](#add-postcss/autoprefixer)
+- [Add SASS/SCSS configuration](#support-sassscss)
+- [Add PostCSS/Autoprefixer](#add-postcssautoprefixer)
 - [Caching and Hashing](#caching-and-hashing)
 - [Clean up before build](#keep-clean-and-fresh)
 - [Add images configuration](#support-images-file)
 - [Add html configuration for Images references](#support-html-images-references)
 - [Full Code webpack.config.js](#wrap-it-up)
 - [Optimization for Production](#optimization-for-production)
-- [Full code webpack config Production](<#wrap-it-up-(Production)>)
+- [Full code webpack config Production](#wrap-it-up-production)
 
 ## TL;DR
 
