@@ -13,8 +13,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../build'),
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].chunk.js',
+    filename: '[name].[chunkhash:8].bundle.js',
+    chunkFilename: '[name].[chunkhash:8].chunk.js',
   },
   mode: 'production',
   devtool: 'source-map',

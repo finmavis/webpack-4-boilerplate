@@ -27,8 +27,7 @@
     "terser-webpack-plugin": "^1.2.3",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.7",
-    "webpack-md5-hash": "^0.0.6"
+    "webpack-dev-server": "^3.1.7"
   },
   "scripts": {
     "start": "webpack-dev-server --open --config=config/webpack.dev.js",
