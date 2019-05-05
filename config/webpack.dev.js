@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackMd5Hash = require('webpack-md5-hash');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../build'),
-    filename: '[name].[chunkhash].js',
+    filename: '[name].bundle.js',
   },
   mode: 'development',
   devServer: {
@@ -82,6 +81,5 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html',
     }),
-    new WebpackMd5Hash(),
   ],
 };
