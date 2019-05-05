@@ -10,7 +10,7 @@
 - [Add CSS configuration](#support-css)
 - [Add SASS/SCSS configuration](#support-sassscss)
 - [Add PostCSS/Autoprefixer](#add-postcssautoprefixer)
-- [Caching and Hashing](#caching-and-hashing)
+- [Caching and Hashing](#caching-and-hashingremoved)
 - [Clean up before build](#keep-clean-and-fresh)
 - [Add images configuration](#support-images-file)
 - [Add html configuration for Images references](#support-html-images-references)
@@ -412,7 +412,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   }
   ```
 
-## Caching and Hashing
+## Caching and Hashing (Removed)
 
 - Install `webpack-md5-hash` as Development Dependencies
 
@@ -585,7 +585,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   ```
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
-  const WebpackMd5Hash = require('webpack-md5-hash');
   const CleanWebpackPlugin = require('clean-webpack-plugin');
 
   module.exports = {
@@ -594,7 +593,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     },
     output: {
       path: path.resolve(__dirname, '../build'),
-      filename: '[name].[chunkhash].js',
+      filename: '[name].bundle.js',
     },
     mode: 'development',
     devServer: {
@@ -667,7 +666,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         template: './src/index.html',
         filename: 'index.html',
       }),
-      new WebpackMd5Hash(),
     ],
   };
   ```
@@ -696,7 +694,8 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     ```
     output: {
       path: path.resolve(__dirname, '../build'),
-      filename: '[name].bundle.js',
+      filename: '[name].[chunkhash:8].bundle.js',
+      chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
     ```
 
@@ -817,11 +816,10 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   }
   ```
 
-- Lazy load
+- Lazy load (Will be updated soon)
 
   - Install `@babel/plugin-syntax-dynamic-import`.
   - Update plugin .babelrc
-  - Will be update soon
 
 - Optimize bundle (Compression using gzip and brotli)
 
@@ -892,7 +890,8 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     },
     output: {
       path: path.resolve(__dirname, '../build'),
-      filename: '[name].bundle.js',
+      filename: '[name].[chunkhash:8].bundle.js',
+      chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
     mode: 'production',
     devtool: 'source-map',
@@ -953,6 +952,19 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         new TerserJSPlugin({}),
         new OptimizeCSSAssetsPlugin({}),
       ],
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+        chunks: 'all',
+      },
+      runtimeChunk: {
+        name: 'runtime'
+      },
     },
     plugins: [
       // CleanWebpackPlugin will do some clean up/remove folder before build
