@@ -17,7 +17,6 @@ module.exports = {
     chunkFilename: '[name].[chunkhash:8].chunk.js',
   },
   mode: 'production',
-  devtool: 'source-map',
   module: {
     rules: [
       {
