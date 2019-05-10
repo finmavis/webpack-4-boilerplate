@@ -184,7 +184,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       port: 3000,
       overlay: true,
     },
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-eval-source-map',
     module: {
       rules: [
         {
@@ -602,7 +602,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       port: 3000,
       overlay: true,
     },
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-eval-source-map',
     module: {
       rules: [
         {
@@ -705,11 +705,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     mode: 'production',
     ```
 
-  - Change `dev-tool` to use `source-map`
-
-    ```
-    devtool: 'source-map',
-    ```
+  - Delete `dev-tool` webpack config for Production
 
   - Delete `devServer` configuration
 
@@ -894,7 +890,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
     mode: 'production',
-    devtool: 'source-map',
     module: {
       rules: [
         {
