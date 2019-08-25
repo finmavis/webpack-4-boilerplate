@@ -30,6 +30,16 @@ body {
   }
 }
 
+.example {
+  display: flex;
+  justify-content: center;
+
+  &-style,
+  &-lazy-load {
+    margin: 3rem 2rem;
+  }
+}
+
 .from-scss {
   color: #0096FF;
 }
@@ -41,8 +51,8 @@ body {
 }
 
 #lazy-load {
-  padding: 10px 15px;
+  padding: 1rem 1.5rem;
   border: 0;
-  border-radius: 100px;
+  border-radius: 10rem;
   outline: none;
 }
