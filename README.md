@@ -81,13 +81,13 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 - Open `src/index.js` and add code below :
 
   ```
-  const tes = () => {
+  const hello = () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => resolve("Hello World"), 2000);
     });
   }
 
-  tes()
+  hello()
     .then(value => console.log(value));
   ```
 
@@ -160,7 +160,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   "browserslist": [
     "> 1%",
     "not ie <= 9",
-    "last 3 versions"
+    "last 2 versions"
   ]
   ```
 
@@ -175,7 +175,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     },
     output: {
       path: path.resolve(__dirname, '../build'),
-      filename: 'main.bundle.js'
+      filename: '[name].bundle.js'
     },
     mode: 'development',
     devServer: {
@@ -323,14 +323,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       rules: [
         // ... others module rules configuration
         {
-          test: /\.css$/,
-          use: [
-            'style-loader',
-            'css-loader'
-          ]
-        },
-        {
-          test: /\.(sa|sc)ss$/,
+          test: /\.(sa|sc|c)ss$/,
           use: [
             'style-loader',
             'css-loader',
@@ -389,16 +382,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       rules: [
         // ... others module rules configuration
         {
-          test: /\.css$/,
-          exclude: /node_modules/,
-          use: [
-            'style-loader',
-            'css-loader',
-            'postcss-loader',
-          ],
-        },
-        {
-          test: /\.(sa|sc)ss$/,
+          test: /\.(sa|sc|c)ss$/,
           exclude: /node_modules/,
           use: [
             'style-loader',
@@ -409,45 +393,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         },
       ]
     },
-  }
-  ```
-
-## Caching and Hashing (Removed)
-
-- Install `webpack-md5-hash` as Development Dependencies
-
-  If you're using **yarn**
-
-  ```
-  yarn add --dev webpack-md5-hash
-  ```
-
-  If you're using **npm**
-
-  ```
-  npm install --save-dev webpack-md5-hash
-  ```
-
-  **Notes** : These are the packages we will be using :
-
-  - `webpack-md5-hash` <br>
-    Plugin to replace a standard webpack chunkhash with md5.
-
-- Open `config/webpack.config.js` and Edit output point of your js :
-
-  ```
-  const WebpackMd5Hash = require('webpack-md5-hash');
-
-  module.exports = {
-    // ... others configuration
-    output: {
-      path: path.resolve(__dirname, '../build'),
-      filename: '[name].[chunkhash].js',
-    },
-    plugins: [
-      // ... others plugins configuration
-      new WebpackMd5Hash()
-    ]
   }
   ```
 
@@ -613,16 +558,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
           },
         },
         {
-          test: /\.css$/,
-          exclude: /node_modules/,
-          use: [
-            'style-loader', // creates style nodes from JS strings
-            'css-loader', // translates CSS into CommonJS
-            'postcss-loader', // Loader for webpack to process CSS with PostCSS
-          ],
-        },
-        {
-          test: /\.(sa|sc)ss$/,
+          test: /\.(sa|sc|c)ss$/,
           exclude: /node_modules/,
           use: [
             'style-loader', // creates style nodes from JS strings
@@ -648,7 +584,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
           use: {
             loader: 'html-loader',
             options: {
-              attrs: ['img:src', 'link:href', ':data-src'],
+              attrs: ['img:src', ':data-src'],
               minimize: true,
             },
           },
@@ -753,16 +689,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       rules: [
         // ... others rules configuration
         {
-          test: /\.css$/,
-          exclude: /node_modules/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            'css-loader', // translates CSS into CommonJS
-            'postcss-loader', // Loader for webpack to process CSS with PostCSS
-          ],
-        },
-        {
-          test: /\.(sa|sc)ss$/,
+          test: /\.(sa|sc|c)ss$/,
           exclude: /node_modules/,
           use: [
             MiniCssExtractPlugin.loader,
@@ -866,7 +793,88 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     }
     ```
 
-## Wrap it up (Production)
+## Wrap it up
+
+- `webpack.dev.js`
+
+  ```
+  const path = require("path");
+  const HtmlWebpackPlugin = require("html-webpack-plugin");
+  const CleanWebpackPlugin = require("clean-webpack-plugin");
+
+  module.exports = {
+    entry: {
+      main: "./src/index.js"
+    },
+    output: {
+      path: path.resolve(__dirname, "../build"),
+      filename: "[name].bundle.js"
+    },
+    mode: "development",
+    devServer: {
+      contentBase: path.join(__dirname, "../build"),
+      compress: true,
+      port: 3000,
+      overlay: true
+    },
+    devtool: "cheap-module-eval-source-map",
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader" // transpiling our JavaScript files using Babel and webpack
+          }
+        },
+        {
+          test: /\.(sa|sc|c)ss$/,
+          exclude: /node_modules/,
+          use: [
+            "style-loader", // creates style nodes from JS strings
+            "css-loader", // translates CSS into CommonJS
+            "postcss-loader", // Loader for webpack to process CSS with PostCSS
+            "sass-loader" // compiles Sass to CSS, using Node Sass by default
+          ]
+        },
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: [
+            {
+              loader: "file-loader", // This will resolves import/require() on a file into a url and emits the file into the output directory.
+              options: {
+                name: "[name].[ext]",
+                outputPath: "assets/images/"
+              }
+            }
+          ]
+        },
+        {
+          test: /\.html$/,
+          use: {
+            loader: "html-loader",
+            options: {
+              attrs: ["img:src", ":data-src"],
+              minimize: true
+            }
+          }
+        }
+      ]
+    },
+    plugins: [
+      // CleanWebpackPlugin will do some clean up/remove folder before build
+      // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
+      new CleanWebpackPlugin(["dist", "build"], {
+        root: path.resolve(__dirname, "../")
+      }),
+      // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
+      new HtmlWebpackPlugin({
+        template: "./src/index.html",
+        filename: "index.html"
+      })
+    ]
+  };
+  ```
 
 - `webpack.prod.js`
 
@@ -900,16 +908,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
           },
         },
         {
-          test: /\.css$/,
-          exclude: /node_modules/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            'css-loader', // translates CSS into CommonJS
-            'postcss-loader', // Loader for webpack to process CSS with PostCSS
-          ],
-        },
-        {
-          test: /\.(sa|sc)ss$/,
+          test: /\.(sa|sc|c)ss$/,
           exclude: /node_modules/,
           use: [
             MiniCssExtractPlugin.loader,
@@ -935,7 +934,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
           use: {
             loader: 'html-loader',
             options: {
-              attrs: ['img:src', 'link:href', ':data-src'],
+              attrs: ['img:src', ':data-src'],
               minimize: true,
             },
           },
