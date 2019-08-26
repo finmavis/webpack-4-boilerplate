@@ -16,7 +16,7 @@
 - [Add html configuration for Images references](#support-html-images-references)
 - [Full Code webpack.config.js](#wrap-it-up)
 - [Optimization for Production](#optimization-for-production)
-- [Full code webpack config Production](#wrap-it-up)
+- [Full code webpack config Production](#wrap-it-up-dev-prod)
 
 ## TL;DR
 
@@ -793,7 +793,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     }
     ```
 
-## Wrap it up
+## Wrap it up (Dev Prod)
 
 - `webpack.dev.js`
 
