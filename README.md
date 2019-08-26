@@ -783,6 +783,33 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     document.querySelector("#lazy-load").addEventListener('click', lazyLoadExample);
     ```
 
+- Optimize bundle - make our bundle smaller (Smaller = Faster)
+
+  - Update our production config `config/webpack.prod.js`
+
+  ```
+  module.exports = {
+    // ... others configuration
+    optimization: {
+      minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendors",
+            chunks: "all"
+          }
+        },
+        chunks: "all"
+      },
+      runtimeChunk: {
+        name: "runtime"
+      }
+    },
+    // ... others configuration
+  }
+  ```
+
 - Optimize bundle (Compression using gzip and brotli)
 
   - Install `compression-webpack-plugin brotli-webpack-plugin` as development dependencies
