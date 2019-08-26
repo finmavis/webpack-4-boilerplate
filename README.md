@@ -16,7 +16,7 @@
 - [Add html configuration for Images references](#support-html-images-references)
 - [Full Code webpack.config.js](#wrap-it-up)
 - [Optimization for Production](#optimization-for-production)
-- [Full code webpack config Production](#wrap-it-up-production)
+- [Full code webpack config Production](#wrap-it-up)
 
 ## TL;DR
 
