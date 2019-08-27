@@ -199,6 +199,50 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   };
   ```
 
+- Add `Lazy Load` feature
+
+  - Install `@babel/plugin-syntax-dynamic-import` as development dependencies
+  - Update .babelrc
+
+    ```
+    {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "useBuiltIns": "usage",
+            "debug": true,
+            "corejs": 3
+          }
+        ]
+      ],
+      "plugins": ["@babel/plugin-syntax-dynamic-import"]
+    }
+    ```
+
+  - Now you can start using lazy load module. For Example :
+
+    ```
+    /**
+    * lazy-load-example.js
+    */
+    export const lazyLoad = () => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => resolve("Hello from lazy load!"), 1000);
+      });
+    }
+
+    /**
+    * index.js
+    */
+    async function lazyLoadExample() {
+      const { lazyLoad } = await import('./scripts/lazy-load-example');
+      lazyLoad().then(res => console.log(res));
+    };
+
+    document.querySelector("#lazy-load").addEventListener('click', lazyLoadExample);
+    ```
+
 ## Auto Inject your bundle javascript code to HTML
 
 - Install `html-webpack-plugin` as Development Dependencies
@@ -738,50 +782,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     ]
   }
   ```
-
-- Lazy load
-
-  - Install `@babel/plugin-syntax-dynamic-import` as development dependencies
-  - Update .babelrc
-
-    ```
-    {
-      "presets": [
-        [
-          "@babel/preset-env",
-          {
-            "useBuiltIns": "usage",
-            "debug": true,
-            "corejs": 3
-          }
-        ]
-      ],
-      "plugins": ["@babel/plugin-syntax-dynamic-import"]
-    }
-    ```
-
-  - Now you can start using lazy load module. For Example :
-
-    ```
-    /**
-    * lazy-load-example.js
-    */
-    export const lazyLoad = () => {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => resolve("Hello from lazy load!"), 1000);
-      });
-    }
-
-    /**
-    * index.js
-    */
-    async function lazyLoadExample() {
-      const { lazyLoad } = await import('./scripts/lazy-load-example');
-      lazyLoad().then(res => console.log(res));
-    };
-
-    document.querySelector("#lazy-load").addEventListener('click', lazyLoadExample);
-    ```
 
 - Optimize bundle - make our bundle smaller (Smaller = Faster)
 
