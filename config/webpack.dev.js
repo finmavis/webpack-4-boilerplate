@@ -29,7 +29,6 @@ module.exports = {
       },
       {
         test: /\.(sa|sc|c)ss$/,
-        exclude: /node_modules/,
         use: [
           "style-loader", // creates style nodes from JS strings
           "css-loader", // translates CSS into CommonJS

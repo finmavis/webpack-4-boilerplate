@@ -427,7 +427,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         // ... others module rules configuration
         {
           test: /\.(sa|sc|c)ss$/,
-          exclude: /node_modules/,
           use: [
             'style-loader',
             'css-loader',
@@ -603,7 +602,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         },
         {
           test: /\.(sa|sc|c)ss$/,
-          exclude: /node_modules/,
           use: [
             'style-loader', // creates style nodes from JS strings
             'css-loader', // translates CSS into CommonJS
@@ -734,7 +732,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         // ... others rules configuration
         {
           test: /\.(sa|sc|c)ss$/,
-          exclude: /node_modules/,
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader', // translates CSS into CommonJS
@@ -756,7 +753,8 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       // ... others plugins configuration
       // This plugin will extract all css to one file
       new MiniCssExtractPlugin({
-        filename: 'style.min.css',
+        filename: '[name].min.css',
+        chunkFilename: "[id].min.css"
       }),
     ]
   }
@@ -779,6 +777,39 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     },
     plugins: [
       // ... Plugins configuration
+    ]
+  }
+  ```
+
+- Optimize bundle - Remove unused CSS
+
+  - Install `purgecss-webpack-plugin` as development dependencies
+  - Add new import on webpack.prod.js
+
+  ```
+  // ... others import
+  const PurgecssPlugin = require('purgecss-webpack-plugin');
+  const glob = require("glob");
+
+  module.exports = {
+    // ... others configuration
+    module: {
+    rules: [
+      // ... others config
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader", // translates CSS into CommonJS
+          "postcss-loader", // Loader for webpack to process CSS with PostCSS
+          "sass-loader" // compiles Sass to CSS, using Node Sass by default
+        ]
+      },
+    ],
+    // ... others configuration
+    new PurgecssPlugin({
+      paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
+    }),
     ]
   }
   ```
@@ -895,7 +926,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         },
         {
           test: /\.(sa|sc|c)ss$/,
-          exclude: /node_modules/,
           use: [
             "style-loader", // creates style nodes from JS strings
             "css-loader", // translates CSS into CommonJS
@@ -953,6 +983,8 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   const TerserJSPlugin = require('terser-webpack-plugin');
   const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
   const BrotliPlugin = require('brotli-webpack-plugin');
+  const PurgecssPlugin = require('purgecss-webpack-plugin');
+  const glob = require("glob");
 
   module.exports = {
     entry: {
@@ -975,7 +1007,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         },
         {
           test: /\.(sa|sc|c)ss$/,
-          exclude: /node_modules/,
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader', // translates CSS into CommonJS
@@ -1034,7 +1065,8 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       }),
       // This plugin will extract all css to one file
       new MiniCssExtractPlugin({
-        filename: 'style.min.css',
+        filename: '[name].min.css',
+        chunkFilename: "[id].min.css",
       }),
       // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
       new HtmlWebpackPlugin({
@@ -1048,6 +1080,9 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         algorithm: 'gzip',
       }),
       new BrotliPlugin({}),
+      new PurgecssPlugin({
+        paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
+      }),
     ],
   };
   ```

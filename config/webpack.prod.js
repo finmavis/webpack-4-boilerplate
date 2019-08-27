@@ -6,6 +6,8 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const BrotliPlugin = require("brotli-webpack-plugin");
+const PurgecssPlugin = require('purgecss-webpack-plugin');
+const glob = require("glob");
 
 module.exports = {
   entry: {
@@ -28,7 +30,6 @@ module.exports = {
       },
       {
         test: /\.(sa|sc|c)ss$/,
-        exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           "css-loader", // translates CSS into CommonJS
@@ -84,7 +85,8 @@ module.exports = {
     }),
     // This plugin will extract all css to one file
     new MiniCssExtractPlugin({
-      filename: "style.min.css"
+      filename: "[name].min.css",
+      chunkFilename: "[id].min.css",
     }),
     // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
     new HtmlWebpackPlugin({
@@ -97,6 +99,9 @@ module.exports = {
     new CompressionPlugin({
       algorithm: "gzip"
     }),
-    new BrotliPlugin({})
+    new BrotliPlugin({}),
+    new PurgecssPlugin({
+      paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
+    }),
   ]
 };
