@@ -753,8 +753,8 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       // ... others plugins configuration
       // This plugin will extract all css to one file
       new MiniCssExtractPlugin({
-        filename: '[name].min.css',
-        chunkFilename: "[id].min.css"
+        filename: "[name].[chunkhash:8].bundle.css",
+        chunkFilename: "[name].[chunkhash:8].chunk.css",
       }),
     ]
   }
@@ -1065,8 +1065,8 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       }),
       // This plugin will extract all css to one file
       new MiniCssExtractPlugin({
-        filename: '[name].min.css',
-        chunkFilename: "[id].min.css",
+        filename: "[name].[chunkhash:8].bundle.css",
+        chunkFilename: "[name].[chunkhash:8].chunk.css",
       }),
       // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
       new HtmlWebpackPlugin({

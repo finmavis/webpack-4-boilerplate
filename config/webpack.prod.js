@@ -38,7 +38,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpe?g|gif)$/,
         use: [
           {
             loader: "file-loader", // This will resolves import/require() on a file into a url and emits the file into the output directory.
@@ -85,8 +85,8 @@ module.exports = {
     }),
     // This plugin will extract all css to one file
     new MiniCssExtractPlugin({
-      filename: "[name].min.css",
-      chunkFilename: "[id].min.css",
+      filename: "[name].[chunkhash:8].bundle.css",
+      chunkFilename: "[name].[chunkhash:8].chunk.css",
     }),
     // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
     new HtmlWebpackPlugin({
