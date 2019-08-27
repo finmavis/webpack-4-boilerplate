@@ -506,13 +506,13 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       rules: [
         // ... others rules configuration
         {
-          test: /\.(png|svg|jpg|gif)$/,
+          test: /\.(png|svg|jpe?g|gif)$/,
           use: [
             {
               loader: 'file-loader',
               options: {
                 name: '[name].[ext]',
-                outputPath: 'assets/images/',
+                outputPath: 'assets/',
               },
             },
           ],
@@ -610,13 +610,13 @@ If you only want to use this webpack 4 configuration and dont want to know how t
           ],
         },
         {
-          test: /\.(png|svg|jpg|gif)$/,
+          test: /\.(png|svg|jpe?g|gif)$/,
           use: [
             {
               loader: 'file-loader', // This will resolves import/require() on a file into a url and emits the file into the output directory.
               options: {
                 name: '[name].[ext]',
-                outputPath: 'assets/images/',
+                outputPath: 'assets/',
               },
             },
           ],
@@ -934,13 +934,13 @@ If you only want to use this webpack 4 configuration and dont want to know how t
           ]
         },
         {
-          test: /\.(png|svg|jpg|gif)$/,
+          test: /\.(png|svg|jpe?g|gif)$/,
           use: [
             {
               loader: "file-loader", // This will resolves import/require() on a file into a url and emits the file into the output directory.
               options: {
                 name: "[name].[ext]",
-                outputPath: "assets/images/"
+                outputPath: "assets/"
               }
             }
           ]
@@ -1015,13 +1015,13 @@ If you only want to use this webpack 4 configuration and dont want to know how t
           ],
         },
         {
-          test: /\.(png|svg|jpg|gif)$/,
+          test: /\.(png|svg|jpe?g|gif)$/,
           use: [
             {
               loader: 'file-loader', // This will resolves import/require() on a file into a url and emits the file into the output directory.
               options: {
                 name: '[name].[ext]',
-                outputPath: 'assets/images/',
+                outputPath: 'assets/',
               },
             },
           ],

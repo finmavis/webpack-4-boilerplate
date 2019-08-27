@@ -44,9 +44,9 @@ module.exports = {
             loader: "file-loader", // This will resolves import/require() on a file into a url and emits the file into the output directory.
             options: {
               name: "[name].[ext]",
-              outputPath: "assets/images/"
+              outputPath: "assets/"
             }
-          }
+          },
         ]
       },
       {
