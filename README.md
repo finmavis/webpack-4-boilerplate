@@ -794,23 +794,25 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   module.exports = {
     // ... others configuration
     module: {
-    rules: [
-      // ... others config
-      {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader", // translates CSS into CommonJS
-          "postcss-loader", // Loader for webpack to process CSS with PostCSS
-          "sass-loader" // compiles Sass to CSS, using Node Sass by default
-        ]
-      },
+      rules: [
+        // ... others config
+        {
+          test: /\.(sa|sc|c)ss$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            "css-loader", // translates CSS into CommonJS
+            "postcss-loader", // Loader for webpack to process CSS with PostCSS
+            "sass-loader" // compiles Sass to CSS, using Node Sass by default
+          ]
+        },
+      ],
+    },
+    plugins: [
+      // ... others plugin configuration
+      new PurgecssPlugin({
+        paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
+      }),
     ],
-    // ... others configuration
-    new PurgecssPlugin({
-      paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
-    }),
-    ]
   }
   ```
 
@@ -821,6 +823,9 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   ```
   module.exports = {
     // ... others configuration
+    module: {
+      // ... module configuration
+    },
     optimization: {
       minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
       splitChunks: {
