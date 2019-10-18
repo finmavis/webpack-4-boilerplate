@@ -463,15 +463,13 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 - Open `config/webpack.config.js` and add code below :
 
   ```
-  const CleanWebpackPlugin = require('clean-webpack-plugin');
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
   module.exports = {
     // ... others configuration
     plugins: [
       // ... others plugins configuration
-      new CleanWebpackPlugin(['dist', 'build'], {
-        root: path.resolve(__dirname, '../'),
-      })
+      new CleanWebpackPlugin({}),
     ]
   }
   ```
@@ -573,7 +571,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   ```
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
-  const CleanWebpackPlugin = require('clean-webpack-plugin');
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
   module.exports = {
     entry: {
@@ -636,9 +634,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     plugins: [
       // CleanWebpackPlugin will do some clean up/remove folder before build
       // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-      new CleanWebpackPlugin(['dist', 'build'], {
-        root: path.resolve(__dirname, '../'),
-      }),
+      new CleanWebpackPlugin({}),
       // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
       new HtmlWebpackPlugin({
         template: './src/index.html',
@@ -902,7 +898,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   ```
   const path = require("path");
   const HtmlWebpackPlugin = require("html-webpack-plugin");
-  const CleanWebpackPlugin = require("clean-webpack-plugin");
+  const { CleanWebpackPlugin} = require("clean-webpack-plugin");
 
   module.exports = {
     entry: {
@@ -965,9 +961,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     plugins: [
       // CleanWebpackPlugin will do some clean up/remove folder before build
       // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-      new CleanWebpackPlugin(["dist", "build"], {
-        root: path.resolve(__dirname, "../")
-      }),
+      new CleanWebpackPlugin({}),
       // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
       new HtmlWebpackPlugin({
         template: "./src/index.html",
@@ -983,7 +977,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   const path = require('path');
   const MiniCssExtractPlugin = require('mini-css-extract-plugin');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
-  const CleanWebpackPlugin = require('clean-webpack-plugin');
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin');
   const CompressionPlugin = require('compression-webpack-plugin');
   const TerserJSPlugin = require('terser-webpack-plugin');
   const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -1065,9 +1059,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     plugins: [
       // CleanWebpackPlugin will do some clean up/remove folder before build
       // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-      new CleanWebpackPlugin(['dist', 'build'], {
-        root: path.resolve(__dirname, "../"),
-      }),
+      new CleanWebpackPlugin({}),
       // This plugin will extract all css to one file
       new MiniCssExtractPlugin({
         filename: "[name].[chunkhash:8].bundle.css",
