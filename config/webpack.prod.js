@@ -1,7 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const TerserJSPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -80,9 +80,7 @@ module.exports = {
   plugins: [
     // CleanWebpackPlugin will do some clean up/remove folder before build
     // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-    new CleanWebpackPlugin(["dist", "build"], {
-      root: path.resolve(__dirname, "../")
-    }),
+    new CleanWebpackPlugin({}),
     // This plugin will extract all css to one file
     new MiniCssExtractPlugin({
       filename: "[name].[chunkhash:8].bundle.css",
