@@ -28,7 +28,7 @@
     "terser-webpack-plugin": "^2.2.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.2"
+    "webpack-dev-server": "^3.9.0"
   },
   "scripts": {
     "start": "webpack-dev-server --open --config=config/webpack.dev.js",
