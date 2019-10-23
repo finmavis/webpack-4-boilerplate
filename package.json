@@ -21,7 +21,7 @@
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
-    "postcss-preset-env": "^6.6.0",
+    "postcss-preset-env": "^6.7.0",
     "purgecss-webpack-plugin": "^1.6.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
