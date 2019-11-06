@@ -1060,6 +1060,10 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       // CleanWebpackPlugin will do some clean up/remove folder before build
       // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
       new CleanWebpackPlugin({}),
+      // PurgecssPlugin will remove unused CSS
+      new PurgecssPlugin({
+        paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
+      }),
       // This plugin will extract all css to one file
       new MiniCssExtractPlugin({
         filename: "[name].[chunkhash:8].bundle.css",
@@ -1077,9 +1081,6 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         algorithm: 'gzip',
       }),
       new BrotliPlugin({}),
-      new PurgecssPlugin({
-        paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
-      }),
     ],
   };
   ```
