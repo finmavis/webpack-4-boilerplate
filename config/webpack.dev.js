@@ -7,7 +7,7 @@ module.exports = {
     main: "./src/index.js"
   },
   output: {
-    path: path.resolve(__dirname, "../build"),
+    path: path.join(__dirname, "../build"),
     filename: "[name].bundle.js"
   },
   mode: "development",
@@ -63,7 +63,7 @@ module.exports = {
   plugins: [
     // CleanWebpackPlugin will do some clean up/remove folder before build
     // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-    new CleanWebpackPlugin({}),
+    new CleanWebpackPlugin(),
     // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
     new HtmlWebpackPlugin({
       template: "./src/index.html",

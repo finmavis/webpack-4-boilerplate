@@ -14,7 +14,7 @@ module.exports = {
     main: "./src/index.js"
   },
   output: {
-    path: path.resolve(__dirname, "../build"),
+    path: path.join(__dirname, "../build"),
     filename: "[name].[chunkhash:8].bundle.js",
     chunkFilename: "[name].[chunkhash:8].chunk.js"
   },
@@ -62,7 +62,7 @@ module.exports = {
     ]
   },
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
     splitChunks: {
       cacheGroups: {
         commons: {
@@ -80,7 +80,7 @@ module.exports = {
   plugins: [
     // CleanWebpackPlugin will do some clean up/remove folder before build
     // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-    new CleanWebpackPlugin({}),
+    new CleanWebpackPlugin(),
     // PurgecssPlugin will remove unused CSS
     new PurgecssPlugin({
       paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
@@ -101,6 +101,6 @@ module.exports = {
     new CompressionPlugin({
       algorithm: "gzip"
     }),
-    new BrotliPlugin({}),
+    new BrotliPlugin(),
   ]
 };

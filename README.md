@@ -174,7 +174,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       main: './src/index.js'
     },
     output: {
-      path: path.resolve(__dirname, '../build'),
+      path: path.join(__dirname, '../build'),
       filename: '[name].bundle.js'
     },
     mode: 'development',
@@ -469,7 +469,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     // ... others configuration
     plugins: [
       // ... others plugins configuration
-      new CleanWebpackPlugin({}),
+      new CleanWebpackPlugin(),
     ]
   }
   ```
@@ -578,7 +578,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       main: './src/index.js',
     },
     output: {
-      path: path.resolve(__dirname, '../build'),
+      path: path.join(__dirname, '../build'),
       filename: '[name].bundle.js',
     },
     mode: 'development',
@@ -634,7 +634,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     plugins: [
       // CleanWebpackPlugin will do some clean up/remove folder before build
       // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-      new CleanWebpackPlugin({}),
+      new CleanWebpackPlugin(),
       // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
       new HtmlWebpackPlugin({
         template: './src/index.html',
@@ -667,7 +667,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
 
     ```
     output: {
-      path: path.resolve(__dirname, '../build'),
+      path: path.join(__dirname, '../build'),
       filename: '[name].[chunkhash:8].bundle.js',
       chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
@@ -767,8 +767,8 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     }
     optimization: {
       minimizer: [
-        new TerserJSPlugin({}),
-        new OptimizeCSSAssetsPlugin({}),
+        new TerserJSPlugin(),
+        new OptimizeCSSAssetsPlugin(),
       ],
     },
     plugins: [
@@ -823,7 +823,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       // ... module configuration
     },
     optimization: {
-      minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+      minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
       splitChunks: {
         cacheGroups: {
           commons: {
@@ -886,7 +886,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
         new CompressionPlugin({
           algorithm: 'gzip',
         }),
-        new BrotliPlugin({}),
+        new BrotliPlugin(),
       ]
     }
     ```
@@ -898,14 +898,14 @@ If you only want to use this webpack 4 configuration and dont want to know how t
   ```
   const path = require("path");
   const HtmlWebpackPlugin = require("html-webpack-plugin");
-  const { CleanWebpackPlugin} = require("clean-webpack-plugin");
+  const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
   module.exports = {
     entry: {
       main: "./src/index.js"
     },
     output: {
-      path: path.resolve(__dirname, "../build"),
+      path: path.join(__dirname, "../build"),
       filename: "[name].bundle.js"
     },
     mode: "development",
@@ -961,7 +961,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     plugins: [
       // CleanWebpackPlugin will do some clean up/remove folder before build
       // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-      new CleanWebpackPlugin({}),
+      new CleanWebpackPlugin(),
       // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
       new HtmlWebpackPlugin({
         template: "./src/index.html",
@@ -990,7 +990,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       main: './src/index.js',
     },
     output: {
-      path: path.resolve(__dirname, '../build'),
+      path: path.join(__dirname, '../build'),
       filename: '[name].[chunkhash:8].bundle.js',
       chunkFilename: '[name].[chunkhash:8].chunk.js',
     },
@@ -1039,8 +1039,8 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     },
     optimization: {
       minimizer: [
-        new TerserJSPlugin({}),
-        new OptimizeCSSAssetsPlugin({}),
+        new TerserJSPlugin(),
+        new OptimizeCSSAssetsPlugin(),
       ],
       splitChunks: {
         cacheGroups: {
@@ -1059,7 +1059,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
     plugins: [
       // CleanWebpackPlugin will do some clean up/remove folder before build
       // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-      new CleanWebpackPlugin({}),
+      new CleanWebpackPlugin(),
       // PurgecssPlugin will remove unused CSS
       new PurgecssPlugin({
         paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
@@ -1080,7 +1080,7 @@ If you only want to use this webpack 4 configuration and dont want to know how t
       new CompressionPlugin({
         algorithm: 'gzip',
       }),
-      new BrotliPlugin({}),
+      new BrotliPlugin(),
     ],
   };
   ```
