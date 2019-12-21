@@ -24,7 +24,7 @@
     "postcss-preset-env": "^6.7.0",
     "purgecss-webpack-plugin": "^1.6.0",
     "sass-loader": "^8.0.0",
-    "style-loader": "^1.0.2",
+    "style-loader": "^1.1.1",
     "terser-webpack-plugin": "^2.3.1",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
