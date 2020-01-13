@@ -35,7 +35,7 @@
     "build": "webpack --config=config/webpack.prod.js"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.7.0",
+    "@babel/polyfill": "^7.8.3",
     "core-js": "3"
   },
   "browserslist": [
