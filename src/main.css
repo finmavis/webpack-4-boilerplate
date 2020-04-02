@@ -1,0 +1,17 @@
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* Set font to 1rem = 10px */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-size: 1.6rem;
+  background-color: lightseagreen;
+  margin: 0;
+  padding: 0;
+}

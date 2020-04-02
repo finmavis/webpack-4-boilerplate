@@ -1,106 +1,260 @@
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
-const TerserJSPlugin = require("terser-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const BrotliPlugin = require("brotli-webpack-plugin");
-const PurgecssPlugin = require('purgecss-webpack-plugin');
-const glob = require("glob");
+const path = require('path');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const safePostCssParser = require('postcss-safe-parser');
+const TerserPlugin = require('terser-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+
+const ROOT_DIRECTORY = process.cwd();
 
 module.exports = {
+  mode: 'production',
   entry: {
-    main: "./src/index.js"
+    main: path.resolve(ROOT_DIRECTORY, 'src/index.js'),
   },
   output: {
-    path: path.join(__dirname, "../build"),
-    filename: "[name].[chunkhash:8].bundle.js",
-    chunkFilename: "[name].[chunkhash:8].chunk.js"
+    path: path.resolve(ROOT_DIRECTORY, 'build'),
+    filename: '[name].[contenthash:8].bundle.js',
+    chunkFilename: '[name].[contenthash:8].chunk.js',
   },
-  mode: "production",
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader" // transpiling our JavaScript files using Babel and webpack
-        }
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            configFile: path.resolve(ROOT_DIRECTORY, 'config/babel.config.js'),
+          },
+        },
       },
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.css$/,
+        exclude: /\.module\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
-          "css-loader", // translates CSS into CommonJS
-          "postcss-loader", // Loader for webpack to process CSS with PostCSS
-          "sass-loader" // compiles Sass to CSS, using Node Sass by default
-        ]
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: false,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              config: {
+                path: path.resolve(ROOT_DIRECTORY, 'config'),
+              },
+            },
+          },
+        ],
       },
       {
-        test: /\.(png|svg|jpe?g|gif)$/,
+        test: /\.module\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: {
+                localIdentName: '[name]__[local]--[contenthash:8]',
+              },
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              config: {
+                path: path.resolve(ROOT_DIRECTORY, 'config'),
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(sass|scss)$/,
+        exclude: /\.module\.(sass|scss)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: false,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              config: {
+                path: path.resolve(ROOT_DIRECTORY, 'config'),
+              },
+            },
+          },
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.module\.(sass|scss)$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: {
+                localIdentName: '[name]__[local]--[contenthash:8]',
+              },
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              config: {
+                path: path.resolve(ROOT_DIRECTORY, 'config'),
+              },
+            },
+          },
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|bmp|webp)$/i,
         use: [
           {
-            loader: "file-loader", // This will resolves import/require() on a file into a url and emits the file into the output directory.
+            loader: 'url-loader',
             options: {
-              name: "[name].[ext]",
-              outputPath: "assets/"
-            }
+              name: '[name].[contenthash:8].[ext]',
+              limit: 4096,
+              outputPath: 'assets',
+            },
           },
-        ]
+        ],
       },
       {
-        test: /\.html$/,
-        use: {
-          loader: "html-loader",
-          options: {
-            attrs: ["img:src", ":data-src"],
-            minimize: true
-          }
-        }
-      }
-    ]
-  },
-  optimization: {
-    minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
-    splitChunks: {
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "vendors",
-          chunks: "all"
-        }
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[contenthash:8].[ext]',
+              outputPath: 'assets',
+            },
+          },
+        ],
       },
-      chunks: "all"
-    },
-    runtimeChunk: {
-      name: "runtime"
-    }
+    ],
   },
   plugins: [
-    // CleanWebpackPlugin will do some clean up/remove folder before build
-    // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
     new CleanWebpackPlugin(),
-    // PurgecssPlugin will remove unused CSS
-    new PurgecssPlugin({
-      paths: glob.sync(path.resolve(__dirname, '../src/**/*'), { nodir: true })
-    }),
-    // This plugin will extract all css to one file
-    new MiniCssExtractPlugin({
-      filename: "[name].[chunkhash:8].bundle.css",
-      chunkFilename: "[name].[chunkhash:8].chunk.css",
-    }),
-    // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      filename: "index.html"
+      template: path.resolve(ROOT_DIRECTORY, 'src/index.html'),
+      filename: 'index.html',
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
     }),
-    // ComppresionPlugin will Prepare compressed versions of assets to serve them with Content-Encoding.
-    // In this case we use gzip
-    // But, you can also use the newest algorithm like brotli, and it's supperior than gzip
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash:8].bundle.css',
+      chunkFilename: '[name].[contenthash:8].chunk.css',
+    }),
     new CompressionPlugin({
-      algorithm: "gzip"
+      algorithm: 'gzip',
+      compressionOptions: { level: 9 },
+      filename: '[path].gz[query]',
+      minRatio: 0.8,
+      test: /\.(js|css|html|svg)$/,
     }),
-    new BrotliPlugin(),
-  ]
+    new CompressionPlugin({
+      algorithm: 'brotliCompress',
+      compressionOptions: { level: 11 },
+      filename: '[path].br[query]',
+      minRatio: 0.8,
+      test: /\.(js|css|html|svg)$/,
+    }),
+  ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          parse: {
+            ecma: 8,
+          },
+          compress: {
+            comparisons: false,
+            ecma: 5,
+            inline: 2,
+          },
+          mangle: {
+            safari10: true,
+          },
+          output: {
+            ascii_only: true,
+            comments: false,
+            ecma: 5,
+          },
+        },
+      }),
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: {
+          parser: safePostCssParser,
+          map: false,
+        },
+        cssProcessorPluginOptions: {
+          preset: [
+            'default',
+            {
+              discardComments: {
+                removeAll: true,
+              },
+              minifyFontValues: {
+                removeQuotes: false,
+              },
+            },
+          ],
+        },
+      }),
+    ],
+    runtimeChunk: {
+      name: entrypoint => `runtime-${entrypoint.name}`,
+    },
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 };

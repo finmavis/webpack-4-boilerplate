@@ -1,21 +1,14 @@
-import { hello, tes } from './scripts/import-example';
+import './main.css';
+import styles from './index.module.css';
 
-import './styles/style.css';
-import './styles/style.scss';
-import './styles/style.sass';
+const h1 = document.querySelector('h1');
+h1.classList.add(styles.h1);
 
-hello();
-
-async function run() {
-  const value = await tes();
-  console.log(value)
+async function print() {
+  // Here we are using dynamic import
+  const { greet } = await import('./greet');
+  const response = await greet('John Doe');
+  console.log(response);
 }
 
-run();
-
-async function lazyLoadExample() {
-  const { lazyLoad } = await import('./scripts/lazy-load-example');
-  lazyLoad().then(res => console.log(res));
-};
-
-document.querySelector("#lazy-load").addEventListener('click', lazyLoadExample);
+print();

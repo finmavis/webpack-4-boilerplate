@@ -1,73 +1,181 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const ROOT_DIRECTORY = process.cwd();
 
 module.exports = {
+  mode: 'development',
   entry: {
-    main: "./src/index.js"
+    main: path.resolve(ROOT_DIRECTORY, 'src/index.js'),
   },
   output: {
-    path: path.join(__dirname, "../build"),
-    filename: "[name].bundle.js"
+    path: path.resolve(ROOT_DIRECTORY, 'build'),
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].chunk.js',
   },
-  mode: "development",
   devServer: {
-    contentBase: path.join(__dirname, "../build"),
+    contentBase: path.resolve(ROOT_DIRECTORY, 'build'),
     compress: true,
     port: 3000,
-    overlay: true
+    overlay: true,
   },
-  devtool: "cheap-module-eval-source-map",
+  devtool: 'cheap-module-eval-source-map',
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader" // transpiling our JavaScript files using Babel and webpack
-        }
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            configFile: path.resolve(ROOT_DIRECTORY, 'config/babel.config.js'),
+          },
+        },
       },
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.css$/,
+        exclude: /\.module\.css$/,
         use: [
-          "style-loader", // creates style nodes from JS strings
-          "css-loader", // translates CSS into CommonJS
-          "postcss-loader", // Loader for webpack to process CSS with PostCSS
-          "sass-loader" // compiles Sass to CSS, using Node Sass by default
-        ]
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: false,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              config: {
+                path: path.resolve(ROOT_DIRECTORY, 'config'),
+              },
+            },
+          },
+        ],
       },
       {
-        test: /\.(png|svg|jpe?g|gif)$/,
+        test: /\.module\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: {
+                localIdentName: '[name]__[local]--[contenthash:8]',
+              },
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              config: {
+                path: path.resolve(ROOT_DIRECTORY, 'config'),
+              },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(sass|scss)$/,
+        exclude: /\.module\.(sass|scss)$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: false,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              config: {
+                path: path.resolve(ROOT_DIRECTORY, 'config'),
+              },
+            },
+          },
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.module\.(sass|scss)$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: true,
+              import: true,
+              modules: {
+                localIdentName: '[name]__[local]--[contenthash:8]',
+              },
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              config: {
+                path: path.resolve(ROOT_DIRECTORY, 'config'),
+              },
+            },
+          },
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|bmp|webp)$/i,
         use: [
           {
-            loader: "file-loader", // This will resolves import/require() on a file into a url and emits the file into the output directory.
+            loader: 'url-loader',
             options: {
-              name: "[name].[ext]",
-              outputPath: "assets/"
-            }
+              name: '[name].[contenthash:8].[ext]',
+              limit: 4096,
+              outputPath: 'assets',
+            },
           },
-        ]
+        ],
       },
       {
-        test: /\.html$/,
-        use: {
-          loader: "html-loader",
-          options: {
-            attrs: ["img:src", ":data-src"],
-            minimize: true
-          }
-        }
-      }
-    ]
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[contenthash:8].[ext]',
+              outputPath: 'assets',
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
-    // CleanWebpackPlugin will do some clean up/remove folder before build
-    // In this case, this plugin will remove 'dist' and 'build' folder before re-build again
-    new CleanWebpackPlugin(),
-    // The plugin will generate an HTML5 file for you that includes all your webpack bundles in the body using script tags
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      filename: "index.html"
+      template: path.resolve(ROOT_DIRECTORY, 'src/index.html'),
+      filename: 'index.html',
     }),
-  ]
+  ],
 };
